@@ -145,7 +145,18 @@ namespace Game_Of_Life
         }
         public void AddCell(int x,int y) // Adding cell to the matrix
         {
-            Matrix[x,y] = 1;
+            try
+            {
+                if (x > Width - 1 || y > Height - 1)
+                    throw new System.IndexOutOfRangeException("Index was outside the bounds of the array");
+                else
+                Matrix[x, y] = 1;
+            }
+            catch(IndexOutOfRangeException outOfRange)
+            {
+                Console.WriteLine("Error: {0}", outOfRange.Message);
+            }
+
         }
     }
 }
