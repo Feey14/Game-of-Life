@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Game_Of_Life
 {
-    public class Game_Of_Life_Class
+    public class GameOfLife
     {
         public int Width { get; set; }
         public int Height { get; set; }
@@ -14,30 +14,29 @@ namespace Game_Of_Life
             public int HeightCoord;
             public int WidthCoord;
         }
-        public Game_Of_Life_Class(int Width, int Height) // Constructor class that creates Matrix
+        public GameOfLife(int Width, int Height) // Constructor class that creates Matrix
         {
             this.Width = Width;
             this.Height = Height;
             Matrix = new int[Width, Height];
         }
-
         public void PrintMatrix()//Printing Matrix
         {
             for (int i = 0; i < Height; i++)
             {
-                string line_string = "";
+                string line = "";
                 for (int j = 0; j < Width; j++)
                 {
-                    if (Matrix[j, i] == 1) { line_string = line_string + "X"; }
-                    else if (Matrix[j, i] == 0) { line_string = line_string + " "; }
+                    if (Matrix[j, i] == 1) { line += "X"; }
+                    else if (Matrix[j, i] == 0) { line += " "; }
                 }
-                Console.WriteLine(line_string);
+                Console.WriteLine(line);
             }
         }
-        public void iteration()
+        public void iterate()
         {
             List<Coordinates> ToAdd = new List<Coordinates>();
-            List<Coordinates> ToDelete = new List<Coordinates>();
+            List<Coordinates> ToRemove = new List<Coordinates>();
             for (int i = 0; i < Width; i++) // i == Width
             {
                 int neighbour_count = 0;
@@ -46,9 +45,9 @@ namespace Game_Of_Life
                     neighbour_count = 0;
                     if (i == 0 && j == 0) // Top left corner
                     {
-                        if (Matrix[i + 1, j] == 1) neighbour_count++;
-                        if (Matrix[i + 1, j + 1] == 1) neighbour_count++;
-                        if (Matrix[i, j + 1] == 1) neighbour_count++;
+                        if (Matrix[i + 1, j] == 1) neighbour_count++; // Cell to the right
+                        if (Matrix[i + 1, j + 1] == 1) neighbour_count++; // Cell to the bottom right
+                        if (Matrix[i, j + 1] == 1) neighbour_count++; // Cell to the bottom
                     }
                     else
                     if (i == Width - 1 && j == 0) // Top right corner
@@ -125,12 +124,12 @@ namespace Game_Of_Life
                         coord.WidthCoord = i;
                         ToAdd.Add(coord);
                     }
-                    if (neighbour_count == 0 || neighbour_count == 1 || neighbour_count >= 4)// if Cell is to be destroyed Add to ToDelete List
+                    if (neighbour_count == 0 || neighbour_count == 1 || neighbour_count >= 4)// if Cell is to be destroyed Add to ToRemove List
                     {
                         Coordinates coord = new Coordinates();
                         coord.HeightCoord = j;
                         coord.WidthCoord = i;
-                        ToDelete.Add(coord);
+                        ToRemove.Add(coord);
                     }
                 }
             }
@@ -139,12 +138,12 @@ namespace Game_Of_Life
                 Matrix[add.WidthCoord, add.HeightCoord] = 1;
             }
 
-            foreach (var add in ToDelete)// Deleting Cells
+            foreach (var add in ToRemove)// Deleting Cells
             {
                 Matrix[add.WidthCoord, add.HeightCoord] = 0;
             }
         }
-        public void AddCell(int x,int y) // Adding cell to matrix
+        public void AddCell(int x,int y) // Adding cell to the matrix
         {
             Matrix[x,y] = 1;
         }
