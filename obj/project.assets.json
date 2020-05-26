@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Edgar Bondar\\source\\repos\\Game Of Life\\Game Of Life.csproj",
+      "projectUniqueName": "C:\\Users\\Edgar Bondar\\source\\repos\\Game Of Lifev1\\Game Of Life\\Game Of Life.csproj",
       "projectName": "Game Of Life",
-      "projectPath": "C:\\Users\\Edgar Bondar\\source\\repos\\Game Of Life\\Game Of Life.csproj",
+      "projectPath": "C:\\Users\\Edgar Bondar\\source\\repos\\Game Of Lifev1\\Game Of Life\\Game Of Life.csproj",
       "packagesPath": "C:\\Users\\Edgar Bondar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Edgar Bondar\\source\\repos\\Game Of Life\\obj\\",
+      "outputPath": "C:\\Users\\Edgar Bondar\\source\\repos\\Game Of Lifev1\\Game Of Life\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
