@@ -6,141 +6,90 @@ namespace Game_Of_Life
 {
     public class GameOfLife
     {
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public int[,] Matrix { get; set; }
-        struct Coordinates
+        public struct Coordinates
         {
             public int HeightCoord;
             public int WidthCoord;
+            public Coordinates(int x, int y)
+            {
+                HeightCoord = x;
+                WidthCoord = y;
+            }
         }
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public List<Coordinates> Matrix { get; set; }
         public GameOfLife(int Width, int Height) // Constructor class that creates Matrix
         {
             this.Width = Width;
             this.Height = Height;
-            Matrix = new int[Width, Height];
+            Matrix = new List<Coordinates>();
         }
         public void PrintMatrix()//Printing Matrix
         {
+            string line = "";
             for (int i = 0; i < Height; i++)
             {
-                string line = "";
+                line = "";
                 for (int j = 0; j < Width; j++)
                 {
-                    if (Matrix[j, i] == 1) { line += "X"; }
-                    else if (Matrix[j, i] == 0) { line += " "; }
+                    if (Matrix.Exists(x => x.WidthCoord == j && x.HeightCoord == i)) { line += "X"; }
+                    else { line += " "; }
                 }
-                Console.WriteLine(line);
+                Console.WriteLine(line+"{0}",i);
             }
+            line = "";
+            for (int j = 0; j <= Width; j++)
+            {
+                line += j;
+            }
+            Console.WriteLine(line);
+
         }
-        public void iterate()
+        public int NeighbourCount(int WidthCoord, int HeightCoord)
+        {
+            int neighbours = 0;
+            if (Matrix.Exists(x => x.WidthCoord == WidthCoord - 1 && x.HeightCoord == HeightCoord - 1)) { neighbours++; } // Top left
+            if (Matrix.Exists(x => x.WidthCoord == WidthCoord - 1 && x.HeightCoord == HeightCoord )) { neighbours++; } // Left
+            if (Matrix.Exists(x => x.WidthCoord == WidthCoord - 1 && x.HeightCoord == HeightCoord + 1)) { neighbours++; } // Bottom Left
+            if (Matrix.Exists(x => x.WidthCoord == WidthCoord && x.HeightCoord == HeightCoord - 1)) { neighbours++; } // Top
+            if (Matrix.Exists(x => x.WidthCoord == WidthCoord && x.HeightCoord == HeightCoord + 1)) { neighbours++; } // Bottom
+            if (Matrix.Exists(x => x.WidthCoord == WidthCoord + 1 && x.HeightCoord == HeightCoord - 1)) { neighbours++; } // Top right
+            if (Matrix.Exists(x => x.WidthCoord == WidthCoord + 1 && x.HeightCoord == HeightCoord)) { neighbours++; } // Right
+            if (Matrix.Exists(x => x.WidthCoord == WidthCoord + 1 && x.HeightCoord == HeightCoord + 1)) { neighbours++; } // Bottom right
+            return neighbours;
+        }
+        public void Iterate()
         {
             List<Coordinates> ToAdd = new List<Coordinates>();
             List<Coordinates> ToRemove = new List<Coordinates>();
-            for (int i = 0; i < Width; i++) // i == Width
+            foreach (var cell in Matrix)
             {
                 int neighbour_count = 0;
-                for (int j = 0; j < Height; j++) // j == Height
-                {
-                    neighbour_count = 0;
-                    if (i == 0 && j == 0) // Top left corner
+                for (int i = -1; i < 2; i++) {
+                    for (int j = -1; j < 2; j++)
                     {
-                        if (Matrix[i + 1, j] == 1) neighbour_count++; // Cell to the right
-                        if (Matrix[i + 1, j + 1] == 1) neighbour_count++; // Cell to the bottom right
-                        if (Matrix[i, j + 1] == 1) neighbour_count++; // Cell to the bottom
-                    }
-                    else
-                    if (i == Width - 1 && j == 0) // Top right corner
-                    {
-                        if (Matrix[i - 1, j] == 1) neighbour_count++;
-                        if (Matrix[i - 1, j + 1] == 1) neighbour_count++;
-                        if (Matrix[i, j + 1] == 1) neighbour_count++;
-                    }
-                    else
-                    if (i == 0 && j == Height - 1)// Bottom left corner
-                    {
-                        if (Matrix[i + 1, j] == 1) neighbour_count++;
-                        if (Matrix[i + 1, j - 1] == 1) neighbour_count++;
-                        if (Matrix[i, j - 1] == 1) neighbour_count++;
-                    }
-                    else
-                    if (i == Width - 1 && j == Height - 1)// Bottom right corner
-                    {
-                        if (Matrix[i, j - 1] == 1) neighbour_count++;
-                        if (Matrix[i - 1, j - 1] == 1) neighbour_count++;
-                        if (Matrix[i - 1, j] == 1) neighbour_count++;
-                    }
-                    else
-                    if (i == 0)// Left of the Matrix
-                    {
-                        if (Matrix[i, j + 1] == 1) neighbour_count++;
-                        if (Matrix[i + 1, j + 1] == 1) neighbour_count++;
-                        if (Matrix[i + 1, j] == 1) neighbour_count++;
-                        if (Matrix[i + 1, j - 1] == 1) neighbour_count++;
-                        if (Matrix[i, j - 1] == 1) neighbour_count++;
-                    }
-                    else
-                    if (i == Width - 1) // Right of the Matrix
-                    {
-                        if (Matrix[i, j + 1] == 1) neighbour_count++;
-                        if (Matrix[i - 1, j + 1] == 1) neighbour_count++;
-                        if (Matrix[i - 1, j] == 1) neighbour_count++;
-                        if (Matrix[i - 1, j - 1] == 1) neighbour_count++;
-                        if (Matrix[i - 1, j] == 1) neighbour_count++;
-                    }
-                    else
-                    if (j == 0)// Top of the Matrix
-                    {
-                        if (Matrix[i - 1, j] == 1) neighbour_count++;
-                        if (Matrix[i - 1, j + 1] == 1) neighbour_count++;
-                        if (Matrix[i, j + 1] == 1) neighbour_count++;
-                        if (Matrix[i + 1, j + 1] == 1) neighbour_count++;
-                        if (Matrix[i + 1, j] == 1) neighbour_count++;
-                    }
-                    else
-                    if (j == Height - 1) // Bottom of the matrix
-                    {
-                        if (Matrix[i - 1, j] == 1) neighbour_count++;
-                        if (Matrix[i - 1, j - 1] == 1) neighbour_count++;
-                        if (Matrix[i, j - 1] == 1) neighbour_count++;
-                        if (Matrix[i + 1, j - 1] == 1) neighbour_count++;
-                        if (Matrix[i + 1, j] == 1) neighbour_count++;
-                    }
-                    else  //Matrix Cell that isnt within matrix edges
-                    {
-                        if (Matrix[i - 1, j + 1] == 1) neighbour_count++; // down left
-                        if (Matrix[i, j + 1] == 1) neighbour_count++; // down center
-                        if (Matrix[i + 1, j + 1] == 1) neighbour_count++;// down right
-                        if (Matrix[i - 1, j] == 1) neighbour_count++;//center left
-                        if (Matrix[i + 1, j] == 1) neighbour_count++;//center right
-                        if (Matrix[i - 1, j - 1] == 1) neighbour_count++;//up left
-                        if (Matrix[i, j - 1] == 1) neighbour_count++;//up center
-                        if (Matrix[i + 1, j - 1] == 1) neighbour_count++;//up right
-                    }
-                    if (neighbour_count == 3) // if neighbour count is 3 adding coordinates to List
-                    {
-                        Coordinates coord = new Coordinates();
-                        coord.HeightCoord = j;
-                        coord.WidthCoord = i;
-                        ToAdd.Add(coord);
-                    }
-                    if (neighbour_count == 0 || neighbour_count == 1 || neighbour_count >= 4)// if Cell is to be destroyed Add to ToRemove List
-                    {
-                        Coordinates coord = new Coordinates();
-                        coord.HeightCoord = j;
-                        coord.WidthCoord = i;
-                        ToRemove.Add(coord);
+                        neighbour_count = NeighbourCount(cell.WidthCoord + i, cell.HeightCoord + j);
+                        if (neighbour_count == 3) { ToAdd.Add(new Coordinates(cell.WidthCoord + i, cell.HeightCoord + j)); }//Console.WriteLine("in matrix {0} {1}", cell.WidthCoord, cell.HeightCoord); }
+                        if (neighbour_count == 0 || neighbour_count == 1 || neighbour_count >= 4) { ToRemove.Add(new Coordinates(cell.WidthCoord + i, cell.HeightCoord + j)); }
                     }
                 }
             }
             foreach (var add in ToAdd)// Adding new Cells
             {
-                Matrix[add.WidthCoord, add.HeightCoord] = 1;
+                AddCell(add.WidthCoord, add.HeightCoord);
             }
-
-            foreach (var add in ToRemove)// Deleting Cells
+            foreach (var remove in ToRemove)// Deleting Cells
             {
-                Matrix[add.WidthCoord, add.HeightCoord] = 0;
+              
+                
+                
+                
+                
+                
+                
+                
+                RemoveCell(remove.WidthCoord, remove.HeightCoord);
             }
         }
         public void AddCell(int x,int y) // Adding cell to the matrix
@@ -150,13 +99,41 @@ namespace Game_Of_Life
                 if (x > Width - 1 || y > Height - 1)
                     throw new System.IndexOutOfRangeException("Index was outside the bounds of the array");
                 else
-                Matrix[x, y] = 1;
+                {
+                    Coordinates coord;
+                    coord.WidthCoord = x;
+                    coord.HeightCoord = y;
+                   // Console.WriteLine("in matrix {0} {1}", coord.WidthCoord, coord.HeightCoord);
+                    if (Matrix.Exists(x => x.WidthCoord == coord.WidthCoord && x.HeightCoord == coord.HeightCoord)) { }
+                    else
+                    {
+                        Matrix.Add(coord);
+                    }
+                }
             }
             catch(IndexOutOfRangeException outOfRange)
             {
                 Console.WriteLine("Error: {0}", outOfRange.Message);
             }
-
+        }
+        public void RemoveCell(int x, int y) // Adding cell to the matrix
+        {
+            try
+            {
+                if (x > Width - 1 || y > Height - 1)
+                    throw new System.IndexOutOfRangeException("Index was outside the bounds of the array");
+                else
+                {
+                    Coordinates coord;
+                    coord.WidthCoord = x;
+                    coord.HeightCoord = y;
+                    Matrix.Remove(coord);
+                }
+            }
+            catch (IndexOutOfRangeException outOfRange)
+            {
+                Console.WriteLine("Error: {0}", outOfRange.Message);
+            }
         }
     }
 }

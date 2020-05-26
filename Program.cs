@@ -5,12 +5,10 @@ namespace Game_Of_Life
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
 
-            int Width;
-            int Height;
-
+            int Width,Height;
 
             Console.WriteLine("Enter Matrix Width");
             string input = Console.ReadLine();
@@ -22,29 +20,24 @@ namespace Game_Of_Life
 
             var game = new GameOfLife(Width, Height);
      
-            //Light-weightspaceship
-            game.AddCell(11, 11);
-            game.AddCell(14, 11);
-            game.AddCell(15, 12);
-            game.AddCell(11, 13);
-            game.AddCell(15, 13);
-            game.AddCell(12, 14);
-            game.AddCell(13, 14);
-            game.AddCell(14, 14);
-            game.AddCell(15, 14);
-     
+            //glider
+            game.AddCell(11, 10);
+            game.AddCell(12, 11);
+            game.AddCell(10, 12);
+            game.AddCell(11, 12);
+            game.AddCell(12, 12);
+
             bool finished = false;
             while (finished == false)
             {
                 game.PrintMatrix();
-                game.iterate();
+                game.Iterate();
                 Console.WriteLine("Write 1 to stop, Press Enter for next iteration");
                 string stop;
                 stop = Console.ReadLine();
                 if (stop == "1") finished = true;
                 else Console.Clear();
-            }
-            
+            }  
         }
     }
 }
