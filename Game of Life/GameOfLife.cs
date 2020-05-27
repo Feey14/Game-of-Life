@@ -26,7 +26,7 @@ namespace GameOfLife
         }
         public void PrintMatrix()//Printing Matrix
         {
-            string line = "";
+            string line;
             for (int i = 0; i < Height; i++)
             {
                 line = "";
@@ -35,10 +35,10 @@ namespace GameOfLife
                     if (Matrix[j, i] == 1) { line += "X"; }
                     else if (Matrix[j, i] == 0) { line += " "; }
                 }
-                Console.WriteLine(line + "|");
+                Console.WriteLine(line + "|");// Printing line and right border symbol
             }
             line = "";
-            for (int j = 0; j <= Width; j++)
+            for (int j = 0; j <= Width; j++)// Printing bottom border
             {
                 line += "-";
             }
@@ -51,7 +51,7 @@ namespace GameOfLife
             
             for (int i = 0; i < Width; i++) // i == Width
             {
-                int NeighbourCount = 0;
+                int NeighbourCount;
                 for (int j = 0; j < Height; j++) // j == Height
                 {
             
@@ -82,15 +82,14 @@ namespace GameOfLife
                     }
                 }
             }
-
             foreach (var add in ToAdd)// Adding new Cells
             {
-                Matrix[add.WidthCoord, add.HeightCoord] = 1;
+                AddCell(add.WidthCoord, add.HeightCoord);
             }
 
             foreach (var add in ToRemove)// Deleting Cells
             {
-                Matrix[add.WidthCoord, add.HeightCoord] = 0;
+                RemoveCell(add.WidthCoord, add.HeightCoord);
             }
         }
         public void AddCell(int x, int y) // Adding cell to the matrix
@@ -106,7 +105,20 @@ namespace GameOfLife
             {
                 Console.WriteLine("Error: {0}", outOfRange.Message);
             }
-
+        }
+        public void RemoveCell(int x, int y) // Adding cell to the matrix
+        {
+            try
+            {
+                if (x > Width - 1 || y > Height - 1)
+                    throw new System.IndexOutOfRangeException("Index was outside the bounds of the array");
+                else
+                    Matrix[x, y] = 0;
+            }
+            catch (IndexOutOfRangeException outOfRange)
+            {
+                Console.WriteLine("Error: {0}", outOfRange.Message);
+            }
         }
     }
 }

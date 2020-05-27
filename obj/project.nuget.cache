@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "/YeiJDrc0wClwFYVbmwVbpkDcI9UlL30cLT0LpqzPqs80AeQp58jrLFofqUdWUwbeq83WT+fP3FGLQdt7aVfow==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Edgar Bondar\\source\\repos\\Game Of Life\\Game Of Life.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Edgar Bondar\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
+  ],
+  "logs": []
+}

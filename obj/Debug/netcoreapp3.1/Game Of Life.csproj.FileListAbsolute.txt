@@ -20,3 +20,5 @@ C:\Users\Edgar Bondar\source\repos\Game Of Lifev1\Game Of Life\obj\Debug\netcore
 C:\Users\Edgar Bondar\source\repos\Game Of Lifev1\Game Of Life\obj\Debug\netcoreapp3.1\Game Of Life.AssemblyInfo.cs
 C:\Users\Edgar Bondar\source\repos\Game Of Lifev1\Game Of Life\obj\Debug\netcoreapp3.1\Game Of Life.dll
 C:\Users\Edgar Bondar\source\repos\Game Of Lifev1\Game Of Life\obj\Debug\netcoreapp3.1\Game Of Life.pdb
+C:\Users\Edgar Bondar\source\repos\Game Of Life\obj\Debug\netcoreapp3.1\Game Of Life.csproj.CoreCompileInputs.cache
+C:\Users\Edgar Bondar\source\repos\Game Of Life\obj\Debug\netcoreapp3.1\Game Of Life.genruntimeconfig.cache
