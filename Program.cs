@@ -7,7 +7,6 @@ namespace GameOfLife
     {
         static void Main()
         {
-
             GameOfLife game  = GameOfLifeDataCapture.Capture();
 
             Patterns.LightWeightSpaceship(game);

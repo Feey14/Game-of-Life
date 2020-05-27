@@ -3,21 +3,8 @@ using System.Collections.Generic;
 
 namespace GameOfLife
 {
-    public class GameOfLife
+    public class GameOfLife:GameOfLifeModel, IGameOfLife
     {
-        struct Coordinates
-        {
-            public int HeightCoord;
-            public int WidthCoord;
-            public Coordinates(int x, int y)
-            {
-                HeightCoord = x;
-                WidthCoord = y;
-            }
-        }
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public int[,] Matrix { get; set; }
         public GameOfLife(int Width, int Height) // Constructor class that creates Matrix
         {
             this.Width = Width;
