@@ -4,42 +4,9 @@ using System.Text;
 
 namespace GameOfLife
 {
-    class Patterns
+    class SimkinGliderGun : Patterns
     {
-        public static void LightWeightSpaceship(IGameOfLife game)
-        {
-            game.AddCell(11, 11);
-            game.AddCell(14, 11);
-            game.AddCell(15, 12);
-            game.AddCell(11, 13);
-            game.AddCell(15, 13);
-            game.AddCell(12, 14);
-            game.AddCell(13, 14);
-            game.AddCell(14, 14);
-            game.AddCell(15, 14);
-        }
-        public static void Glider(IGameOfLife game)
-        {
-            game.AddCell(11, 10);
-            game.AddCell(12, 11);
-            game.AddCell(10, 12);
-            game.AddCell(11, 12);
-            game.AddCell(12, 12);
-        }
-        public static void Beacon(IGameOfLife game)
-        {
-            //Beacon 
-            game.AddCell(1, 1);
-            game.AddCell(1, 2);
-            game.AddCell(2, 1);
-            game.AddCell(2, 2);
-
-            game.AddCell(3, 3);
-            game.AddCell(3, 4);
-            game.AddCell(4, 3);
-            game.AddCell(4, 4);
-        }
-        public static void SimkinGliderGun(IGameOfLife game)
+        public override void Add(IGameOfLife game)
         {
             game.AddCell(3, 1);
             game.AddCell(3, 2);
@@ -84,6 +51,5 @@ namespace GameOfLife
             game.AddCell(34, 13);
             game.AddCell(35, 13);
         }
-
     }
 }

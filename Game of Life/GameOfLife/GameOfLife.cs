@@ -25,14 +25,14 @@ namespace GameOfLife
                     if (Matrix[j, i] == 1) { line += "X"; }
                     else if (Matrix[j, i] == 0) { line += " "; }
                 }
-                Console.WriteLine(line + "|");// Printing line and right border symbol
+                Messages.PrintLine(line + "|");// Printing line and right border symbol
             }
             line = "";
             for (int j = 0; j <= Width; j++)// Printing bottom border
             {
                 line += "-";
             }
-            Console.WriteLine(line);
+            Messages.PrintLine(line);
         }
         public int GetNeighbourCount(int i, int j)
         {
@@ -51,22 +51,19 @@ namespace GameOfLife
         {
             List<ICoordinates> ToAdd = Factory.CreateListOfCoordinates();
             List<ICoordinates> ToRemove = Factory.CreateListOfCoordinates();
-
             for (int i = 0; i < Width; i++) // i == Width
             {
                 for (int j = 0; j < Height; j++) // j == Height
                 {
-
                     int NeighbourCount = GetNeighbourCount(i, j);
-
                     if (NeighbourCount == 3) // if neighbour count is 3 adding coordinates to List
                     {
-                        ICoordinates coord = Factory.CreateCoordinates(i,j);
+                        ICoordinates coord = Factory.CreateCoordinates(i, j);
                         ToAdd.Add(coord);
                     }
                     if (NeighbourCount == 0 || NeighbourCount == 1 || NeighbourCount >= 4)// if Cell is to be destroyed Add to ToRemove List
                     {
-                        ICoordinates coord = Factory.CreateCoordinates(i,j);
+                        ICoordinates coord = Factory.CreateCoordinates(i, j);
                         ToRemove.Add(coord);
                     }
                 }
@@ -99,7 +96,7 @@ namespace GameOfLife
             }
             catch (IndexOutOfRangeException outOfRange)
             {
-                Console.WriteLine("Error: {0}", outOfRange.Message);
+                Messages.DisplayError(outOfRange.Message);
             }
         }
         public void RemoveCell(int x, int y) // Adding cell to the matrix
@@ -113,7 +110,7 @@ namespace GameOfLife
             }
             catch (IndexOutOfRangeException outOfRange)
             {
-                Console.WriteLine("Error: {0}", outOfRange.Message);
+                Messages.DisplayError(outOfRange.Message);
             }
         }
     }

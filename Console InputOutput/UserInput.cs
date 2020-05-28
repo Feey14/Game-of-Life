@@ -4,21 +4,19 @@ using System.Text;
 
 namespace GameOfLife
 {
-    class GameOfLifeDataCapture
+    class UserInput
     {
         public static IGameOfLife Capture()
         {
             int Width;
-            Console.WriteLine("Enter Matrix Width");
+            Messages.WidthInputMessage();
             string input = Console.ReadLine();
             Int32.TryParse(input, out Width);
-            Console.Clear();
 
             int Height;
-            Console.WriteLine("Enter Matrix Width");
+            Messages.HeightInputMessage();
             input = Console.ReadLine();
             Int32.TryParse(input, out Height);
-            Console.Clear();
             IGameOfLife game = Factory.CreateGameOfLife(Width,Height);
             return game;
         }

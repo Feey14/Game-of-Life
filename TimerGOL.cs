@@ -15,14 +15,14 @@ namespace GameOfLife
             Console.ReadLine();
             timer.Stop();
             timer.Dispose();
-            Console.WriteLine("Terminating the application...");
+            Messages.TerminatingApplicationMessage();
         }
         static void MyElapsedMethod(IGameOfLife game)
         {
             Console.Clear();
             game.PrintMatrix();
             game.Iterate();
-            Console.WriteLine("Press any key to stop");
+            Messages.PressKeyToStopMessage();
         }
     }
 }

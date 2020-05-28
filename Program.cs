@@ -7,11 +7,13 @@ namespace GameOfLife
     {
         static void Main()
         {
-            IGameOfLife game  = GameOfLifeDataCapture.Capture();
+            IGameOfLife game  = UserInput.Capture();//initialazing GOL
 
-            Patterns.LightWeightSpaceship(game);
+            var lws = new LightWeightSpaceship();
 
-            TimerGOL.StartTimer(game);
+            lws.Add(game);//Adding cells
+
+            TimerGOL.StartTimer(game);//Starting timer
         }
     }
 }
