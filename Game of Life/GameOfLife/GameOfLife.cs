@@ -3,8 +3,11 @@ using System.Collections.Generic;
 
 namespace GameOfLife
 {
-    public class GameOfLife:GameOfLifeModel, IGameOfLife
+    public class GameOfLife : IGameOfLife
     {
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public int[,] Matrix { get; set; }
         public GameOfLife(int Width, int Height) // Constructor class that creates Matrix
         {
             this.Width = Width;
@@ -31,49 +34,55 @@ namespace GameOfLife
             }
             Console.WriteLine(line);
         }
+        public int GetNeighbourCount(int i, int j)
+        {
+            int NeighbourCount = 0;
+            for (int l = -1; l <= 1; l++)
+                for (int m = -1; m <= 1; m++)
+                {
+                    if (i + l < 0 || j + m < 0 || i + l >= Height || j + m >= Width) continue;
+                    else
+                        NeighbourCount += Matrix[i + l, j + m];
+                }
+            NeighbourCount -= Matrix[i, j];
+            return NeighbourCount;
+        }
         public void Iterate()
         {
-            List<Coordinates> ToAdd = new List<Coordinates>();
-            List<Coordinates> ToRemove = new List<Coordinates>();
-            
+            List<ICoordinates> ToAdd = Factory.CreateListOfCoordinates();
+            List<ICoordinates> ToRemove = Factory.CreateListOfCoordinates();
+
             for (int i = 0; i < Width; i++) // i == Width
             {
-                int NeighbourCount;
                 for (int j = 0; j < Height; j++) // j == Height
                 {
-            
-                    NeighbourCount = 0;
-                    for (int l = -1; l <= 1; l++)
-                        for (int m = -1; m <= 1; m++)
-                        {
-                            if (i + l < 0 || j + m < 0 || i + l >= Height || j + m >= Width) continue;
-                            else
-                                NeighbourCount += Matrix[i + l, j + m];
-                        }
 
-                    NeighbourCount -= Matrix[i, j];
+                    int NeighbourCount = GetNeighbourCount(i, j);
 
                     if (NeighbourCount == 3) // if neighbour count is 3 adding coordinates to List
                     {
-                        Coordinates coord = new Coordinates();
-                        coord.HeightCoord = j;
-                        coord.WidthCoord = i;
+                        ICoordinates coord = Factory.CreateCoordinates(i,j);
                         ToAdd.Add(coord);
                     }
                     if (NeighbourCount == 0 || NeighbourCount == 1 || NeighbourCount >= 4)// if Cell is to be destroyed Add to ToRemove List
                     {
-                        Coordinates coord = new Coordinates();
-                        coord.HeightCoord = j;
-                        coord.WidthCoord = i;
+                        ICoordinates coord = Factory.CreateCoordinates(i,j);
                         ToRemove.Add(coord);
                     }
                 }
             }
+            AddCells(ToAdd);
+            RemoveCells(ToRemove);
+        }
+        public void AddCells(List<ICoordinates> ToAdd)
+        {
             foreach (var add in ToAdd)// Adding new Cells
             {
                 AddCell(add.WidthCoord, add.HeightCoord);
             }
-
+        }
+        public void RemoveCells(List<ICoordinates> ToRemove)
+        {
             foreach (var add in ToRemove)// Deleting Cells
             {
                 RemoveCell(add.WidthCoord, add.HeightCoord);

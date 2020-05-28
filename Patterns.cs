@@ -6,7 +6,7 @@ namespace GameOfLife
 {
     class Patterns
     {
-        public static void LightWeightSpaceship(GameOfLife game)
+        public static void LightWeightSpaceship(IGameOfLife game)
         {
             game.AddCell(11, 11);
             game.AddCell(14, 11);
@@ -18,7 +18,7 @@ namespace GameOfLife
             game.AddCell(14, 14);
             game.AddCell(15, 14);
         }
-        public static void glider(GameOfLife game)
+        public static void Glider(IGameOfLife game)
         {
             game.AddCell(11, 10);
             game.AddCell(12, 11);
@@ -26,7 +26,7 @@ namespace GameOfLife
             game.AddCell(11, 12);
             game.AddCell(12, 12);
         }
-        public static void Beacon(GameOfLife game)
+        public static void Beacon(IGameOfLife game)
         {
             //Beacon 
             game.AddCell(1, 1);
@@ -39,7 +39,7 @@ namespace GameOfLife
             game.AddCell(4, 3);
             game.AddCell(4, 4);
         }
-        public static void SimkinGliderGun(GameOfLife game)
+        public static void SimkinGliderGun(IGameOfLife game)
         {
             game.AddCell(3, 1);
             game.AddCell(3, 2);

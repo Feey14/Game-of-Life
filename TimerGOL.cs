@@ -7,9 +7,9 @@ namespace GameOfLife
 {
     class TimerGOL
     {
-        public static void StartTimer(GameOfLife game)
+        public static void StartTimer(IGameOfLife game)
         {
-            var timer = new Timer(1000);
+            var timer = Factory.CreateTimer();
             timer.Elapsed += (sender, e) => MyElapsedMethod(game);
             timer.Start();
             Console.ReadLine();
@@ -17,7 +17,7 @@ namespace GameOfLife
             timer.Dispose();
             Console.WriteLine("Terminating the application...");
         }
-        static void MyElapsedMethod(GameOfLife game)
+        static void MyElapsedMethod(IGameOfLife game)
         {
             Console.Clear();
             game.PrintMatrix();

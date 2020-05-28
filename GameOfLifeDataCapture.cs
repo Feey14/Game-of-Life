@@ -6,7 +6,7 @@ namespace GameOfLife
 {
     class GameOfLifeDataCapture
     {
-        public static GameOfLife Capture()
+        public static IGameOfLife Capture()
         {
             int Width;
             Console.WriteLine("Enter Matrix Width");
@@ -19,7 +19,7 @@ namespace GameOfLife
             input = Console.ReadLine();
             Int32.TryParse(input, out Height);
             Console.Clear();
-            var game = new GameOfLife(Width, Height);
+            IGameOfLife game = Factory.CreateGameOfLife(Width,Height);
             return game;
         }
     }
