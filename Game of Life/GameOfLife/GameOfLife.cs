@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace GameOfLife
 {
@@ -8,6 +9,8 @@ namespace GameOfLife
         public int Width { get; set; }
         public int Height { get; set; }
         public int[,] Matrix { get; set; }
+        public int IterationCount { get; set; } = 0;
+        public int AliveCells { get; set; } = 0;
         public GameOfLife(int Width, int Height) // Constructor class that creates Matrix
         {
             this.Width = Width;
@@ -70,6 +73,7 @@ namespace GameOfLife
             }
             AddCells(ToAdd);
             RemoveCells(ToRemove);
+            IterationCount++;
         }
         public void AddCells(List<ICoordinates> ToAdd)
         {
@@ -112,6 +116,22 @@ namespace GameOfLife
             {
                 Messages.DisplayError(outOfRange.Message);
             }
+        }
+        public void GetAliveCellCount()
+        {
+            AliveCells = 0;
+            for (int i = 0; i < Width; i++) // i == Width
+            {
+                for (int j = 0; j < Height; j++) // j == Height
+                {
+                    if (Matrix[i, j] == 1) AliveCells++;
+                }
+            }
+        }
+        public void PrintInformation()
+        { 
+            Messages.PrintCellCounnt(AliveCells);
+            Messages.PrintIterationCount(IterationCount);
         }
     }
 }

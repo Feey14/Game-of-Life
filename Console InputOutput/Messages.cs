@@ -30,5 +30,13 @@ namespace GameOfLife
         {
             Console.WriteLine("Press any key to stop");
         }
+        public static void PrintCellCounnt(int cellcount)
+        {
+            Console.WriteLine("Alive Cell Count : {0}",cellcount);
+        }
+        public static void PrintIterationCount(int iterationcount)
+        {
+            Console.WriteLine("Iteration count : {0}", iterationcount);
+        }
     }
 }

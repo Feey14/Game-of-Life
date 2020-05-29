@@ -21,6 +21,8 @@ namespace GameOfLife
         {
             Console.Clear();
             game.PrintMatrix();
+            game.GetAliveCellCount();
+            game.PrintInformation();
             game.Iterate();
             Messages.PressKeyToStopMessage();
         }

@@ -14,6 +14,10 @@ namespace GameOfLife
             lws.Add(game);//Adding cells
 
             TimerGOL.StartTimer(game);//Starting timer
+
+            WriteToFile.WriteToFilea(game);
+            //ReadingFromFile.ReadFromaFile();
+            //Console.ReadLine();
         }
     }
 }
