@@ -11,6 +11,10 @@ namespace GameOfLife
         {
             return new GameOfLife(Width, Height);
         }
+        public static List<IGameOfLife> CreateListOfGameOfLife()
+        {
+            return new List<IGameOfLife>();
+        }
         public static ICoordinates CreateCoordinates()
         {
             return new Coordinates();

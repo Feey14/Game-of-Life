@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Timers;
 
 namespace GameOfLife
@@ -7,17 +8,14 @@ namespace GameOfLife
     {
         static void Main()
         {
-            IGameOfLife game  = UserInput.Capture();//initialazing GOL
-
+            IGameOfLife game  = UserInput.Capture();//initialazing game of life
             var lws = new LightWeightSpaceship();
-
-            lws.Add(game);//Adding cells
-
+            lws.Add(game);//Adding lightweightspaceship
             TimerGOL.StartTimer(game);//Starting timer
-
-            WriteToFile.WriteToFilea(game);
-            //ReadingFromFile.ReadFromaFile();
-            //Console.ReadLine();
+            List<IGameOfLife> games = ReadingFromFile.ReadFromaFile();
+            games.Add(game);
+            WriteToFile.WriteToaFile(games);
+            Console.ReadLine();
         }
     }
 }
