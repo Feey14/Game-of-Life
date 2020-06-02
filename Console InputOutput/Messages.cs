@@ -38,5 +38,13 @@ namespace GameOfLife
         {
             Console.WriteLine("Iteration count : {0}", iterationcount);
         }
+        public static void ReadFromaFileMessasge()
+        {
+            Console.WriteLine("Do you want to restore information from a file ?");
+        }
+        public static void WriteToaFileMessage()
+        {
+            Console.WriteLine("Do you want to write this information to a file ?");
+        }
     }
 }

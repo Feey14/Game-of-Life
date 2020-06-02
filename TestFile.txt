@@ -11,10 +11,10 @@ Matrix Height : 30
                               
                               
                               
-           X  X               
-               X              
-           X   X              
-            XXXX              
+             X  X             
+                 X            
+             X   X            
+              XXXX            
                               
                               
                               
@@ -31,38 +31,4 @@ Matrix Height : 30
                               
                               
 Alive Cell Count:9
-Iteration count:0
-Matrix Width : 30
-Matrix Height : 30
-                              
-                              
-                              
-                              
-                              
-                              
-                              
-                              
-                              
-                              
-                              
-                              
-              XX              
-            XX XX             
-            XXXX              
-             XX               
-                              
-                              
-                              
-                              
-                              
-                              
-                              
-                              
-                              
-                              
-                              
-                              
-                              
-                              
-Alive Cell Count:12
-Iteration count:1
+Iteration count:4

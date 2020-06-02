@@ -13,8 +13,6 @@ namespace GameOfLife
             timer.Elapsed += (sender, e) => MyElapsedMethod(game);
             timer.Start();
             game.PrintMatrix();
-            game.GetAliveCellCount();
-            game.PrintInformation();
             Console.ReadLine();
             timer.Stop();
             timer.Dispose();
@@ -25,8 +23,6 @@ namespace GameOfLife
             Console.Clear();
             game.Iterate();
             game.PrintMatrix();
-            game.GetAliveCellCount();
-            game.PrintInformation();
             Messages.PressKeyToStopMessage();
         }
     }

@@ -20,5 +20,19 @@ namespace GameOfLife
             IGameOfLife game = Factory.CreateGameOfLife(Width,Height);
             return game;
         }
+        public static bool ReadFromaFile()
+        {
+            Messages.ReadFromaFileMessasge();
+            string input = Console.ReadLine();
+            Boolean.TryParse(input, out bool result);
+            return result;
+        }
+        public static bool WriteToaFile()
+        {
+            Messages.WriteToaFileMessage();
+            string input = Console.ReadLine();
+            Boolean.TryParse(input, out bool result);
+            return result;
+        }
     }
 }

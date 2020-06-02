@@ -19,6 +19,7 @@ namespace GameOfLife
         }
         public void PrintMatrix()//Printing Matrix
         {
+            GetAliveCellCount();
             string line;
             for (int i = 0; i < Height; i++)
             {
@@ -36,6 +37,7 @@ namespace GameOfLife
                 line += "-";
             }
             Messages.PrintLine(line);
+            PrintInformation();
         }
         public int GetNeighbourCount(int i, int j)
         {
