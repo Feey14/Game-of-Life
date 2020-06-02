@@ -13,6 +13,7 @@ namespace GameOfLife
             timer.Elapsed += (sender, e) => MyElapsedMethod(game);
             timer.Start();
             game.PrintMatrix();
+            Messages.PressKeyToStopMessage();
             Console.ReadLine();
             timer.Stop();
             timer.Dispose();

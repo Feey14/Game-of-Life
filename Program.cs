@@ -8,24 +8,33 @@ namespace GameOfLife
     {
         static void Main()
         {
-            if (UserInput.ReadFromaFile())
+            List<IGameOfLife> thousndgames = Factory.CreateThousandGames();
+            List<IGameOfLife> games = Factory.CreateListOfGameOfLife();
+            Console.WriteLine("Press 'y' if you would like to read from a file!");
+            ConsoleKeyInfo cki = Console.ReadKey();
+            if (cki.Key == ConsoleKey.Y)
             {
-                List<IGameOfLife> games = ReadingFromFile.ReadFromaFile();
-                foreach(var game in games)
+                games = ReadingFromFile.ReadFromaFile();
+                Console.WriteLine("Reading from a file");
+                foreach (var Game in games)
                 {
-                    TimerGOL.StartTimer(game);
+                    Game.PrintMatrix();
                 }
                 WriteToFile.WriteToaFile(games);
-                if (UserInput.WriteToaFile()) WriteToFile.WriteToaFile(games);
             }
-            else {
+            else
+            {
                 IGameOfLife game = UserInput.Capture();//initialazing game of life
+                IGameOfLife game1 = UserInput.Capture();//initialazing game of life
                 var lws = new LightWeightSpaceship();
                 lws.Add(game);//Adding lightweightspaceship
-                TimerGOL.StartTimer(game);//Starting
-                if (UserInput.WriteToaFile()) WriteToFile.WriteToaFile(game);
+                lws.Add(game1);//Adding lightweightspaceship
+                TimerGOL.StartTimer(game);
+                TimerGOL.StartTimer(game1);
+                games.Add(game);
+                games.Add(game1);
+                WriteToFile.WriteToaFile(games);
             }
-            Console.ReadLine();
         }
     }
 }

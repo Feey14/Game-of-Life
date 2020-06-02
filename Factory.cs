@@ -21,7 +21,7 @@ namespace GameOfLife
         }
         public static ICoordinates CreateCoordinates(int x, int y)
         {
-            return new Coordinates(x,y);
+            return new Coordinates(x, y);
         }
         public static List<ICoordinates> CreateListOfCoordinates()
         {
@@ -31,5 +31,18 @@ namespace GameOfLife
         {
             return new Timer(1000);
         }
+        public static List<IGameOfLife> CreateThousandGames()
+        {
+            List<IGameOfLife> thousandgames = Factory.CreateListOfGameOfLife();
+            var beacon = new Beacon();
+            IGameOfLife game = CreateGameOfLife(5,5);
+            beacon.Add(game);
+            for (int i = 0; i < 1000; i++)
+            {
+                thousandgames.Add(game);
+            }
+            return thousandgames;
+        }
+
     }
 }

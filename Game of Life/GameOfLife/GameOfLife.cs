@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.ComTypes;
-
 namespace GameOfLife
 {
+    [Serializable]
     public class GameOfLife : IGameOfLife
     {
         public int Width { get; set; }
