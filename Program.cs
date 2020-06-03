@@ -15,12 +15,13 @@ namespace GameOfLife
             if (cki.Key == ConsoleKey.Y)
             {
                 games = ReadingFromFile.ReadFromaFile();
+                TimerGOL.StartTimer(games[1]);
+                WriteToFile.WriteToaFile(games);
                 Console.WriteLine("Reading from a file");
                 foreach (var Game in games)
                 {
                     Game.PrintMatrix();
                 }
-                WriteToFile.WriteToaFile(games);
             }
             else
             {

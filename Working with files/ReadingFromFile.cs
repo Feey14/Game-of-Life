@@ -13,11 +13,22 @@ namespace GameOfLife
     {
         public static List<IGameOfLife> ReadFromaFile()
         {
-            Console.Clear();
-            IFormatter formatter = new BinaryFormatter();
-            Stream stream = new FileStream("../../../TestFile.bin", FileMode.Open, FileAccess.Read);
-            List<IGameOfLife> games = (List<IGameOfLife>)formatter.Deserialize(stream);
-            return games;
+            try
+            {
+                if (!File.Exists("../../../TestFile.bin"))
+                throw (new Exception("The file dosent exist!"));
+                Console.Clear();
+                IFormatter formatter = new BinaryFormatter();
+                Stream stream = new FileStream("../../../TestFile.bin", FileMode.Open, FileAccess.Read);
+                List<IGameOfLife> games = (List<IGameOfLife>)formatter.Deserialize(stream);
+                stream.Close();
+                return games;
+            }
+            catch (Exception ex)
+            {
+                Messages.DisplayError(ex.Message);
+            }
+            return Factory.CreateListOfGameOfLife();
         }
     }
 }

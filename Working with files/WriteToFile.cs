@@ -11,10 +11,17 @@ namespace GameOfLife
     {
         public static void WriteToaFile(List<IGameOfLife> games)
         {
-            Stream stream = new FileStream("../../../TestFile.bin", FileMode.Create, FileAccess.Write);
-            IFormatter formatter = new BinaryFormatter();
-            formatter.Serialize(stream,games);
-            stream.Close();
+            try
+            {
+                Stream stream = new FileStream("../../../TestFile.bin", FileMode.Create, FileAccess.Write);
+                IFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, games);
+                stream.Close();
+            }
+            catch(Exception ex)
+            {
+                Messages.DisplayError(ex.Message);
+            }
         }
     }
 }
