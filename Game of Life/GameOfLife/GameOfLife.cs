@@ -188,5 +188,14 @@ namespace GameOfLife
                 Console.WriteLine(line);
             }
         }
+        public static int GetTotalCellCount(List<IGameOfLife> games)
+        {
+            int cellcount = 0;
+            foreach (var game in games)
+            {
+                cellcount += game.AliveCells;
+            }
+            return cellcount;
+        }
     }
 }
