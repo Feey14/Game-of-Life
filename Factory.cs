@@ -7,38 +7,39 @@ namespace GameOfLife
 {
     class Factory
     {
-        public static IGameOfLife CreateGameOfLife(int Width, int Height)
+        public IGameOfLife CreateGameOfLife(int Width, int Height)
         {
             return new GameOfLife(Width, Height);
         }
-        public static List<IGameOfLife> CreateListOfGameOfLife()
+        public List<IGameOfLife> CreateListOfGameOfLife()
         {
             return new List<IGameOfLife>();
         }
-        public static ICoordinates CreateCoordinates()
+        public ICoordinates CreateCoordinates()
         {
             return new Coordinates();
         }
-        public static ICoordinates CreateCoordinates(int x, int y)
+        public ICoordinates CreateCoordinates(int x, int y)
         {
             return new Coordinates(x, y);
         }
-        public static List<ICoordinates> CreateListOfCoordinates()
+        public List<ICoordinates> CreateListOfCoordinates()
         {
             return new List<ICoordinates>();
         }
-        public static Timer CreateTimer()
+        public Timer CreateTimer()
         {
             return new Timer(1000);
         }
-        public static List<IGameOfLife> CreateThousandGames()
+        public List<IGameOfLife> CreateThousandGames()
         {
+            var Factory = new Factory();
             List<IGameOfLife> thousandgames = Factory.CreateListOfGameOfLife();
-            var beacon = new Beacon();
-            IGameOfLife game = CreateGameOfLife(5,5);
-            beacon.Add(game);
             for (int i = 0; i < 1000; i++)
             {
+                var beacon = new Beacon();
+                IGameOfLife game = CreateGameOfLife(10, 5);
+                beacon.Add(game);
                 thousandgames.Add(game);
             }
             return thousandgames;

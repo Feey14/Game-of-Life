@@ -9,14 +9,13 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace GameOfLife
 {
-    class ReadingFromFile
+    class WorkingWithFiles
     {
-        public static List<IGameOfLife> ReadFromaFile()
+        public List<IGameOfLife> ReadFromaFile()
         {
+            var Factory = new Factory();
             try
             {
-                if (!File.Exists("../../../TestFile.bin"))
-                throw (new Exception("The file dosent exist!"));
                 Console.Clear();
                 IFormatter formatter = new BinaryFormatter();
                 Stream stream = new FileStream("../../../TestFile.bin", FileMode.Open, FileAccess.Read);
@@ -29,6 +28,20 @@ namespace GameOfLife
                 Messages.DisplayError(ex.Message);
             }
             return Factory.CreateListOfGameOfLife();
+        }
+        public void WriteToaFile(List<IGameOfLife> games)
+        {
+            try
+            {
+                Stream stream = new FileStream("../../../TestFile.bin", FileMode.Create, FileAccess.Write);
+                IFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, games);
+                stream.Close();
+            }
+            catch (Exception ex)
+            {
+                Messages.DisplayError(ex.Message);
+            }
         }
     }
 }
