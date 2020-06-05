@@ -12,7 +12,7 @@ namespace GameOfLife
         {
             var Factory = new Factory();
             var timer = Factory.CreateTimer();
-            timer.Elapsed += (sender, e) => MyElapsedMethod(game);
+            timer.Elapsed += (sender, e) => TimerTick(game);
             timer.Start();
             Console.Clear();
             game.PrintMatrix();
@@ -22,21 +22,21 @@ namespace GameOfLife
             timer.Dispose();
             Messages.TerminatingApplicationMessage();
         }
-        void MyElapsedMethod(IGameOfLife game)
+        void TimerTick(IGameOfLife game)
         {
             Console.Clear();
             game.Iterate();
             game.PrintMatrix();
             Messages.PressKeyToStopMessage();
         }
-        public void StartTimer(List<IGameOfLife> games, IGameOfLife g1, IGameOfLife g2, IGameOfLife g3, IGameOfLife g4, IGameOfLife g5, IGameOfLife g6, IGameOfLife g7, IGameOfLife g8)
+        public void StartTimer(List<IGameOfLife> games, List<IGameOfLife> ToIterate)// Timer for displaying 8 games
         {
             var Factory = new Factory();
             var timer = Factory.CreateTimer();
-            timer.Elapsed += (sender, e) => MyElapsedMethod(games,g1,g2,g3,g4,g5,g6,g7,g8);
+            timer.Elapsed += (sender, e) => TimerTick(games,ToIterate);
             timer.Start();
             Console.Clear();
-            GameOfLife.PrintMatrix(g1, g2, g3, g4, g5, g6, g7, g8);
+            GameOfLife.PrintMatrix(ToIterate);
             Console.WriteLine("Live game count :{0}", games.Count);
             Console.WriteLine("Alive cell count :{0}", GameOfLife.GetTotalCellCount(games));
             Messages.PressKeyToStopMessage();
@@ -45,14 +45,14 @@ namespace GameOfLife
             timer.Dispose();
             Messages.TerminatingApplicationMessage();
         }
-        void MyElapsedMethod(List<IGameOfLife> games, IGameOfLife g1, IGameOfLife g2, IGameOfLife g3, IGameOfLife g4, IGameOfLife g5, IGameOfLife g6, IGameOfLife g7, IGameOfLife g8)
+        void TimerTick(List<IGameOfLife> games, List<IGameOfLife> ToIterate)
         {
             Console.Clear();
             foreach (var game in games)
             {
                 game.Iterate();
             }
-            GameOfLife.PrintMatrix(g1, g2, g3, g4, g5, g6, g7, g8);
+            GameOfLife.PrintMatrix(ToIterate);
             Console.WriteLine("Live game count :{0}", games.Count);
             Console.WriteLine("Alive cell count :{0}", GameOfLife.GetTotalCellCount(games));
             Messages.PressKeyToStopMessage();

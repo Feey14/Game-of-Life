@@ -26,18 +26,24 @@ namespace GameOfLife
                     Console.WriteLine("Press 'F2' if you would like to display 1 game");
                     switch (Console.ReadKey().Key)
                     {
-                        case ConsoleKey.F1:
-                            var timer1 = new TimerGOL();
-                            timer1.StartTimer(games, games[1], games[2], games[3], games[4], games[5], games[6], games[7], games[8]);
-                            break;
-                        case ConsoleKey.F2:
-                            var timer2 = new TimerGOL();
-                            timer2.StartTimer(games[0]);
-                            break;
+                    case ConsoleKey.F1:
+                        var timer1 = new TimerGOL();
+                        List<IGameOfLife> ToIterate = Factory.CreateListOfGameOfLife();
+                        for (int i = 0; i < 8; i++)
+                        {
+                             ToIterate.Add(games[i]);
+                        }
+                        timer1.StartTimer(games, ToIterate);
+                        break;
+                    case ConsoleKey.F2:
+                        var timer2 = new TimerGOL();
+                        timer2.StartTimer(games[0]);
+                        break;
                     }
                     break;
                 case ConsoleKey.F2:
                     games = Factory.CreateThousandGames();
+                        Console.WriteLine("Thousand games have been created");
                     break;
                 case ConsoleKey.F3:
                     var timer = new TimerGOL();
@@ -50,12 +56,14 @@ namespace GameOfLife
                     file.WriteToaFile(games);
                     break;
                 }
-                Console.WriteLine("Press 'y' if you would like to save to a file");
+                Console.WriteLine("Press 'y' if you would like to save data to a file. Currently {0} games are in memory",games.Count);
                 if (Console.ReadKey().Key == ConsoleKey.Y)
                 {
                     file.WriteToaFile(games);
+                    Console.Clear();
+                    Console.WriteLine("Information has been saved to a file");
                 }
-                Console.WriteLine("Press 'y' if you would like to repeat programm");
+                Console.WriteLine("End of Program. Press 'y' if you would like to repeat program");
                 if (!(Console.ReadKey().Key == ConsoleKey.Y)) repeat = false;
             } while (repeat == true);
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.ComTypes;
 namespace GameOfLife
 {
@@ -137,19 +138,92 @@ namespace GameOfLife
             Messages.PrintCellCounnt(AliveCells);
             Messages.PrintIterationCount(IterationCount);
         }
+        public static int GetTotalCellCount(List<IGameOfLife> games)
+        {
+            int cellcount = 0;
+            foreach (var game in games)
+            {
+                game.GetAliveCellCount();
+                cellcount += game.AliveCells;
+            }
+            return cellcount;
+        }
+        //wierd code below 
+        //Print Matrix function that takes 8 games and prints them and when needed(when games cant fit in one line) it transfers to a new line
+        public static void PrintMatrix(List<IGameOfLife> ToIterate)
+        {
+            List<string> lines = new List<string>();
+            int linecount = 0;
+            int consoleWidth = 110;
+            int maxheight = 0;
+            foreach (var game in ToIterate)
+            {
+                if (game.Height > maxheight) { maxheight = game.Height; }
+            }
+            for (int i = 0; i <= maxheight; i++)
+            {
+                string line = "";
+                foreach(var game in ToIterate)
+                {
+                    line = GetlineForPrinting(game, line, i);
+                }
+                lines.Add(line);
+            }
+            float division = (lines[0].Length / consoleWidth);
+            linecount = (int)Math.Ceiling(division) +1;
+            if (linecount > 1)
+            {
+                List<string> linesarr = new List<string>();
+                foreach (var line in lines)
+                {
+                    string templine = "";
+                    if (line.Length > consoleWidth)
+                    {
+                        var minilines = line.Split('|');
+                        templine = "";
+                        linecount = 1;
+                        foreach (var miniline in minilines)
+                        {
+                            if (templine.Length + miniline.Length < consoleWidth)
+                            {
+                                templine += miniline + "|";
+                                continue;
+                            }
+                            linesarr.Add(templine);
+                            templine = "";
+                            templine += miniline+"|";
+                            linecount++;
+                        }
+                    }
+                    else
+                    {
+                        linesarr.Add(line);
+                    }
+                    linesarr.Add(templine);
+                }
+                for (int i = 0; i < linecount; i++)
+                {
+                    for (int j = 0; j <= maxheight; j++)
+                    {
+                        Console.WriteLine(linesarr[j * linecount + i]);
+                    }
+                }
+            }
+            else
+            {
+                foreach(var line in lines)
+                {
+                    Console.WriteLine(line);
+                }
+            }
+        }
         public static string GetlineForPrinting(IGameOfLife game, string line, int height)
         {
-            //Checking if Line lenght is greater than Console Width
-            if (line.Length + game.Width > 200)
-            {
-                Console.WriteLine(line);
-                line = "";
-            }
             if (height > game.Height)
             {
                 for (int j = 0; j < game.Width; j++)
                 {
-                line += " ";
+                    line += " ";
                 }
             }
             if (height == game.Height)
@@ -158,7 +232,7 @@ namespace GameOfLife
                 {
                     line += "-";
                 }
-                line += "-";
+                line += "|";
             }
             else
             {
@@ -170,32 +244,6 @@ namespace GameOfLife
                 line += "|";
             }
             return line;
-        }
-        public static void PrintMatrix(IGameOfLife g1, IGameOfLife g2, IGameOfLife g3, IGameOfLife g4, IGameOfLife g5, IGameOfLife g6, IGameOfLife g7, IGameOfLife g8)//Printing Matrix
-        {
-            List<string> lines = new List<string>();
-            for (int i = 0; i < g1.Height+1; i++)
-            {
-                string line = "";
-                line = GetlineForPrinting(g1, line, i);
-                line = GetlineForPrinting(g2, line, i);
-                line = GetlineForPrinting(g3, line, i);
-                line = GetlineForPrinting(g4, line, i);
-                line = GetlineForPrinting(g5, line, i);
-                line = GetlineForPrinting(g6, line, i);
-                line = GetlineForPrinting(g7, line, i);
-                line = GetlineForPrinting(g8, line, i);
-                Console.WriteLine(line);
-            }
-        }
-        public static int GetTotalCellCount(List<IGameOfLife> games)
-        {
-            int cellcount = 0;
-            foreach (var game in games)
-            {
-                cellcount += game.AliveCells;
-            }
-            return cellcount;
         }
     }
 }

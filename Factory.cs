@@ -38,7 +38,7 @@ namespace GameOfLife
             for (int i = 0; i < 1000; i++)
             {
                 var beacon = new Beacon();
-                IGameOfLife game = CreateGameOfLife(10, 5);
+                IGameOfLife game = CreateGameOfLife(30, 5);
                 beacon.Add(game);
                 thousandgames.Add(game);
             }
