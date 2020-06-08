@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Timers;
-using System.Xml.Schema;
 
 namespace GameOfLife
 {

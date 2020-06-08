@@ -7,7 +7,7 @@ namespace GameOfLife
         int AliveCells { get; set; }
         int Height { get; set; }
         int IterationCount { get; set; }
-        int[,] Matrix { get; set; }
+        bool[,] Matrix { get; set; }
         int Width { get; set; }
 
         void AddCell(int x, int y);

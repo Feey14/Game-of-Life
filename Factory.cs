@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Timers;
 
 namespace GameOfLife
@@ -37,9 +35,9 @@ namespace GameOfLife
             List<IGameOfLife> thousandgames = Factory.CreateListOfGameOfLife();
             for (int i = 0; i < 1000; i++)
             {
-                var beacon = new Beacon();
-                IGameOfLife game = CreateGameOfLife(30, 5);
-                beacon.Add(game);
+                var randompattern = new RandomPattern();
+                IGameOfLife game = CreateGameOfLife(30, 15);
+                randompattern.Add(game);
                 thousandgames.Add(game);
             }
             return thousandgames;

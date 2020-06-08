@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.ComTypes;
+
 namespace GameOfLife
 {
     [Serializable]
@@ -9,48 +8,48 @@ namespace GameOfLife
     {
         public int Width { get; set; }
         public int Height { get; set; }
-        public int[,] Matrix { get; set; }
+        public bool[,] Matrix { get; set; }
         public int IterationCount { get; set; } = 0;
         public int AliveCells { get; set; } = 0;
         public GameOfLife(int Width, int Height) // Constructor class that creates Matrix
         {
             this.Width = Width;
             this.Height = Height;
-            Matrix = new int[Width, Height];
+            Matrix = new bool[Width, Height];
         }
         public void PrintMatrix()//Printing Matrix
         {
             GetAliveCellCount();
             string line;
-            for (int i = 0; i < Height; i++)
+            for (int y = 0; y < Height; y++)
             {
                 line = "";
-                for (int j = 0; j < Width; j++)
+                for (int x = 0; x < Width; x++)
                 {
-                    if (Matrix[j, i] == 1) { line += "X"; }
-                    else if (Matrix[j, i] == 0) { line += " "; }
+                    if (Matrix[x, y] == true) { line += "X"; }
+                    else if (Matrix[x, y] == false) { line += " "; }
                 }
                 Messages.PrintLine(line + "|");// Printing line and right border symbol
             }
             line = "";
-            for (int j = 0; j <= Width; j++)// Printing bottom border
+            for (int x = 0; x <= Width; x++)// Printing bottom border
             {
                 line += "-";
             }
             Messages.PrintLine(line);
             PrintInformation();
         }
-        public int GetNeighbourCount(int i, int j)
+        public int GetNeighbourCount(int x, int y)
         {
             int NeighbourCount = 0;
             for (int l = -1; l <= 1; l++)
                 for (int m = -1; m <= 1; m++)
                 {
-                    if (i + l < 0 || j + m < 0 || i + l >= Width || j + m >= Height) continue;
+                    if (x + l < 0 || y + m < 0 || x + l >= Width || y + m >= Height) continue;
                     else
-                        NeighbourCount += Matrix[i + l, j + m];
+                        NeighbourCount += Convert.ToInt32(Matrix[x + l, y + m]);
                 }
-            NeighbourCount -= Matrix[i, j];
+            NeighbourCount -= Convert.ToInt32(Matrix[x, y]);
             return NeighbourCount;
         }
         public void Iterate()
@@ -58,19 +57,19 @@ namespace GameOfLife
             var Factory = new Factory();
             List<ICoordinates> ToAdd = Factory.CreateListOfCoordinates();
             List<ICoordinates> ToRemove = Factory.CreateListOfCoordinates();
-            for (int i = 0; i < Height; i++) // i == Width
+            for (int y = 0; y < Height; y++) // i == Width
             {
-                for (int j = 0; j < Width; j++) // j == Height
+                for (int x = 0; x < Width; x++) // j == Height
                 {
-                    int NeighbourCount = GetNeighbourCount(j, i);
+                    int NeighbourCount = GetNeighbourCount(x, y);
                     if (NeighbourCount == 3) // if neighbour count is 3 adding coordinates to List
                     {
-                        ICoordinates coord = Factory.CreateCoordinates(j, i);
+                        ICoordinates coord = Factory.CreateCoordinates(x, y);
                         ToAdd.Add(coord);
                     }
                     if (NeighbourCount == 0 || NeighbourCount == 1 || NeighbourCount >= 4)// if Cell is to be destroyed Add to ToRemove List
                     {
-                        ICoordinates coord = Factory.CreateCoordinates(j, i);
+                        ICoordinates coord = Factory.CreateCoordinates(x, y);
                         ToRemove.Add(coord);
                     }
                 }
@@ -101,7 +100,7 @@ namespace GameOfLife
                 if (x > Width - 1 || y > Height - 1)
                     throw new System.IndexOutOfRangeException("Index was outside the bounds of the array");
                 else
-                    Matrix[x, y] = 1;
+                    Matrix[x, y] = true;
             }
             catch (IndexOutOfRangeException outOfRange)
             {
@@ -115,7 +114,7 @@ namespace GameOfLife
                 if (x > Width - 1 || y > Height - 1)
                     throw new System.IndexOutOfRangeException("Index was outside the bounds of the array");
                 else
-                    Matrix[x, y] = 0;
+                    Matrix[x, y] = false;
             }
             catch (IndexOutOfRangeException outOfRange)
             {
@@ -125,11 +124,11 @@ namespace GameOfLife
         public void GetAliveCellCount()
         {
             AliveCells = 0;
-            for (int i = 0; i < Width; i++) // i == Width
+            for (int y = 0; y < Width; y++) // i == Width
             {
-                for (int j = 0; j < Height; j++) // j == Height
+                for (int x = 0; x < Height; x++) // j == Height
                 {
-                    if (Matrix[i, j] == 1) AliveCells++;
+                    if (Matrix[x, y] == true) AliveCells++;
                 }
             }
         }
@@ -238,8 +237,8 @@ namespace GameOfLife
             {
                 for (int j = 0; j < game.Width; j++)
                 {
-                    if (game.Matrix[j, height] == 1) { line += "X"; }
-                    else if (game.Matrix[j, height] == 0) { line += " "; }
+                    if (game.Matrix[j, height] == true) { line += "X"; }
+                    else if (game.Matrix[j, height] == false) { line += " "; }
                 }
                 line += "|";
             }
