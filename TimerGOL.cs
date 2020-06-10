@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Timers;
 
 namespace GameOfLife
 {
@@ -7,8 +8,7 @@ namespace GameOfLife
     {
         public void StartTimer(IGameOfLife game)
         {
-            var Factory = new Factory();
-            var timer = Factory.CreateTimer();
+            var timer = new Timer(1000);
             timer.Elapsed += (sender, e) => TimerTick(game);
             timer.Start();
             Console.Clear();
@@ -28,14 +28,12 @@ namespace GameOfLife
         }
         public void StartTimer(List<IGameOfLife> games, List<IGameOfLife> ToIterate)// Timer for displaying 8 games
         {
-            var Factory = new Factory();
-            var timer = Factory.CreateTimer();
+            var timer = new Timer(1000);
             timer.Elapsed += (sender, e) => TimerTick(games,ToIterate);
             timer.Start();
             Console.Clear();
             GameOfLife.PrintMatrix(ToIterate);
-            Console.WriteLine("Live game count :{0}", games.Count);
-            Console.WriteLine("Alive cell count :{0}", GameOfLife.GetTotalCellCount(games));
+            Messages.GameCountAndCellCount(games);
             Messages.PressKeyToStopMessage();
             Console.ReadLine();
             timer.Stop();
@@ -50,8 +48,7 @@ namespace GameOfLife
                 game.Iterate();
             }
             GameOfLife.PrintMatrix(ToIterate);
-            Console.WriteLine("Live game count :{0}", games.Count);
-            Console.WriteLine("Alive cell count :{0}", GameOfLife.GetTotalCellCount(games));
+            Messages.GameCountAndCellCount(games);
             Messages.PressKeyToStopMessage();
         }
     }

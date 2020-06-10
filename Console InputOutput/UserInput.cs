@@ -6,7 +6,6 @@ namespace GameOfLife
     {
         public IGameOfLife Capture()
         {
-            var Factory = new Factory();
             Messages.WidthInputMessage();
             string input = Console.ReadLine();
             Int32.TryParse(input, out int Width);
@@ -14,7 +13,7 @@ namespace GameOfLife
             Messages.HeightInputMessage();
             input = Console.ReadLine();
             Int32.TryParse(input, out int Height);
-            IGameOfLife game = Factory.CreateGameOfLife(Width,Height);
+            IGameOfLife game = new GameOfLife(Width,Height);
             return game;
         }
     }

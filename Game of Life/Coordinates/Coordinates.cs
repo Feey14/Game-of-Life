@@ -1,6 +1,6 @@
 ﻿namespace GameOfLife
 {
-    public struct Coordinates:ICoordinates
+    public struct Coordinates
     {
         public int HeightCoord { get; set; }
         public int WidthCoord { get; set; }
