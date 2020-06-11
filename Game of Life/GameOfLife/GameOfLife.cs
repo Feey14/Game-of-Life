@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace GameOfLife
@@ -19,8 +20,7 @@ namespace GameOfLife
             Matrix = new bool[Width, Height];
         }
         public void PrintMatrix()//Printing Matrix
-        {
-            GetAliveCellCount();
+        { 
             StringBuilder line = new StringBuilder();
             for (int y = 0; y < Height; y++)
             {
@@ -57,9 +57,9 @@ namespace GameOfLife
         {
             List<Coordinates> ToAdd = new List<Coordinates>();
             List<Coordinates> ToRemove = new List<Coordinates>();
-            for (int y = 0; y < Height; y++) // i == Width
+            for (int y = 0; y < Height; y++) // y == Height
             {
-                for (int x = 0; x < Width; x++) // j == Height
+                for (int x = 0; x < Width; x++) // y == Width
                 {
                     int NeighbourCount = GetNeighbourCount(x, y);
                     if (NeighbourCount == 3) // if neighbour count is 3 adding coordinates to List
@@ -76,46 +76,46 @@ namespace GameOfLife
             }
             AddCells(ToAdd);
             RemoveCells(ToRemove);
-            GetAliveCellCount();
             IterationCount++;
         }
         public void AddCells(List<Coordinates> ToAdd)
         {
             foreach (var add in ToAdd)// Adding new Cells
             {
-                AddCell(add.WidthCoord, add.HeightCoord);
+                if (Matrix[add.WidthCoord, add.HeightCoord] == false)
+                {
+                AddCell(add.WidthCoord, add.HeightCoord); 
+                }
             }
         }
         public void RemoveCells(List<Coordinates> ToRemove)
         {
             foreach (var add in ToRemove)// Deleting Cells
             {
-                RemoveCell(add.WidthCoord, add.HeightCoord);
+                if(Matrix[add.WidthCoord, add.HeightCoord] == true)
+                {
+                    RemoveCell(add.WidthCoord, add.HeightCoord);
+                }
             }
         }
         public void AddCell(int x, int y) // Adding cell to the matrix
         {
             if (x > Width - 1 || y > Height - 1)
-                throw new System.IndexOutOfRangeException("Index was outside the bounds of the array");
+                throw new IndexOutOfRangeException("Index was outside the bounds of the array");
             else
+            {
                 Matrix[x, y] = true;
+                AliveCells++;
+            }
         }
         public void RemoveCell(int x, int y) // Adding cell to the matrix
         {
             if (x > Width - 1 || y > Height - 1)
-                throw new System.IndexOutOfRangeException("Index was outside the bounds of the array");
+                throw new IndexOutOfRangeException("Index was outside the bounds of the array");
             else
-                Matrix[x, y] = false;
-        }
-        public void GetAliveCellCount()
-        {
-            AliveCells = 0;
-            for (int x = 0; x < Width; x++) // i == Width
             {
-                for (int y = 0; y < Height; y++) // j == Height
-                {
-                    if (Matrix[x, y] == true) AliveCells++;
-                }
+                Matrix[x, y] = false;
+                AliveCells--;
             }
         }
         public void PrintInformation()
@@ -123,22 +123,23 @@ namespace GameOfLife
             Messages.PrintCellCounnt(AliveCells);
             Messages.PrintIterationCount(IterationCount);
         }
-        public static int GetTotalCellCount(List<IGameOfLife> games)
+        public static KeyValuePair<int,int> GetTotalCellCountAndActiveGameCount(List<IGameOfLife> games)
         {
-            int cellcount = 0;
+            int activegamecount = games.Count;
+            int totalcellcount = 0;
             foreach (var game in games)
             {
-                game.GetAliveCellCount();
-                cellcount += game.AliveCells;
+                totalcellcount += game.AliveCells;
+                if (game.AliveCells == 0) activegamecount--;
             }
-            return cellcount;
+            return new KeyValuePair<int, int>(totalcellcount, activegamecount);
         }
         //wierd code below 
         //Print Matrix function that takes 8 games and prints them and when needed(when games cant fit in one line) it transfers to a new line
         public static void PrintMatrix(List<IGameOfLife> ToIterate)
         {
-            List<StringBuilder> lines = new List<StringBuilder>();
-            int linecount;
+            List<string> lines = new List<string>();
+            int linecount = 0;
             int consoleWidth = 110;
             int maxheight = 0;
             foreach (var game in ToIterate)
@@ -152,31 +153,31 @@ namespace GameOfLife
                 {
                     line = GetlineForPrinting(game, line, i);
                 }
-                lines.Add(line);
+                lines.Add(line.ToString());
             }
             float division = (lines[0].Length / consoleWidth);
             linecount = (int)Math.Ceiling(division) + 1;
             if (linecount > 1)
             {
-                List<StringBuilder> linesarr = new List<StringBuilder>();
+                List<string> linesarr = new List<string>();
                 foreach (var line in lines)
                 {
-                    StringBuilder templine = new StringBuilder();
+                    string templine = "";
                     if (line.Length > consoleWidth)
                     {
-                        var minilines = line.ToString().Split('|');
-                        templine.Clear();
+                        var minilines = line.Split('|');
+                        templine = "";
                         linecount = 1;
                         foreach (var miniline in minilines)
                         {
                             if (templine.Length + miniline.Length < consoleWidth)
                             {
-                                templine.Append( miniline + "|");
+                                templine += miniline + "|";
                                 continue;
                             }
                             linesarr.Add(templine);
-                            templine.Clear();
-                            templine.Append( miniline + "|" );
+                            templine = "";
+                            templine += miniline + "|";
                             linecount++;
                         }
                     }
@@ -230,5 +231,6 @@ namespace GameOfLife
             }
             return line;
         }
+
     }
 }

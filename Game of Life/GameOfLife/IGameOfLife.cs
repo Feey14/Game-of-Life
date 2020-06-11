@@ -12,7 +12,6 @@ namespace GameOfLife
 
         void AddCell(int x, int y);
         void AddCells(List<Coordinates> ToAdd);
-        void GetAliveCellCount();
         int GetNeighbourCount(int x, int y);
         void Iterate();
         void PrintInformation();

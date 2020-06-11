@@ -60,8 +60,8 @@ namespace GameOfLife
         }
         public static void Option3()
         {
-            Console.WriteLine("Press 'F1' if you would like enter which games you would like to display");
-            Console.WriteLine("Press 'F2' if you would like to display games 0 1 2 3 4 5 6 7");
+            Console.WriteLine("Press 'F1' if you would like to display games 0 1 2 3 4 5 6 7");
+            Console.WriteLine("Press 'F2' if you would like enter which games you would like to display");
         }
         public static void EnterGameNr(int i)
         {
@@ -85,8 +85,7 @@ namespace GameOfLife
         }
         public static void GameCountAndCellCount(List<IGameOfLife> games)
         {
-            Console.WriteLine("Live game count :{0}", games.Count);
-            Console.WriteLine("Alive cell count :{0}", GameOfLife.GetTotalCellCount(games));
+            Console.WriteLine("Live game count : {1} {2}Alive cell count : {0} ", GameOfLife.GetTotalCellCountAndActiveGameCount(games).Key, GameOfLife.GetTotalCellCountAndActiveGameCount(games).Value, Environment.NewLine);
         }
     }
 }

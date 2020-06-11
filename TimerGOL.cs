@@ -28,27 +28,40 @@ namespace GameOfLife
         }
         public void StartTimer(List<IGameOfLife> games, List<IGameOfLife> ToIterate)// Timer for displaying 8 games
         {
-            var timer = new Timer(1000);
-            timer.Elapsed += (sender, e) => TimerTick(games,ToIterate);
+            var timer = new Timer(3000);
+            List<IGameOfLife> toshow = new List<IGameOfLife>();
+            UserInput userinput = new UserInput();
+            timer.Elapsed += (sender, e) => TimerTick(games, ToIterate, toshow, userinput);
             timer.Start();
             Console.Clear();
             GameOfLife.PrintMatrix(ToIterate);
             Messages.GameCountAndCellCount(games);
+            if (toshow.Count != 8) userinput.CaptureGameOfLifes1(games, toshow);
+            if (toshow.Count == 8)
+            {
+                timer.Stop();
+                timer.Dispose();
+                StartTimer(games,toshow);
+            }
             Messages.PressKeyToStopMessage();
             Console.ReadLine();
             timer.Stop();
             timer.Dispose();
             Messages.TerminatingApplicationMessage();
         }
-        void TimerTick(List<IGameOfLife> games, List<IGameOfLife> ToIterate)
+        void TimerTick(List<IGameOfLife> games, List<IGameOfLife> ToIterate, List<IGameOfLife> toshow, UserInput userinput)
         {
             Console.Clear();
             foreach (var game in games)
             {
-                game.Iterate();
+                if (game.AliveCells != 0)
+                {
+                    game.Iterate();
+                }
             }
             GameOfLife.PrintMatrix(ToIterate);
             Messages.GameCountAndCellCount(games);
+            Messages.EnterGameNr(toshow.Count+1);
             Messages.PressKeyToStopMessage();
         }
     }
