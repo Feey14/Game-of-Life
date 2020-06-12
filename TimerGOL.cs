@@ -28,7 +28,7 @@ namespace GameOfLife
         }
         public void StartTimer(List<IGameOfLife> games, List<IGameOfLife> ToIterate)// Timer for displaying 8 games
         {
-            var timer = new Timer(2000);
+            var timer = new Timer(1000);
             List<IGameOfLife> toshow = new List<IGameOfLife>();
             UserInput userinput = new UserInput();
             int state = 0;

@@ -4,17 +4,17 @@
     {
         public override void Add(IGameOfLife game)
         {
-            if (game.Width >= 16 && game.Height >= 15)
+            if (game.Width >= 6 && game.Height >= 5)
             {
-                game.AddCell(11, 11);
-                game.AddCell(14, 11);
-                game.AddCell(15, 12);
-                game.AddCell(11, 13);
-                game.AddCell(15, 13);
-                game.AddCell(12, 14);
-                game.AddCell(13, 14);
-                game.AddCell(14, 14);
-                game.AddCell(15, 14);
+                game.AddCell(1, 1);
+                game.AddCell(4, 1);
+                game.AddCell(5, 2);
+                game.AddCell(1, 3);
+                game.AddCell(5, 3);
+                game.AddCell(2, 4);
+                game.AddCell(3, 4);
+                game.AddCell(4, 4);
+                game.AddCell(5, 4);
             }
         }
     }
