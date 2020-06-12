@@ -31,7 +31,7 @@ namespace GameOfLife
         }
         public static void PrintCellCounnt(int cellcount)
         {
-            Console.WriteLine("Alive Cell Count : {0}",cellcount);
+            Console.WriteLine("Alive Cell Count : {0}", cellcount);
         }
         public static void PrintIterationCount(int iterationcount)
         {
@@ -48,20 +48,15 @@ namespace GameOfLife
         public static void Option1()
         {
             Console.Clear();
-            Console.WriteLine("Press F1 if you would like to read from a file");
-            Console.WriteLine("Press F2 if you would like to create 1000 games");
-            Console.WriteLine("Press F3 if you would like to create one Game of Life");
+            Console.WriteLine("Press F1 if you would like to read from a file{0}Press F2 if you would like to create 1000 games{0}Press F3 if you would like to create one Game of Life", Environment.NewLine);
         }
         public static void Option2(List<IGameOfLife> games)
         {
-            Console.WriteLine("Item count in the list : {0} ", games.Count);
-            Console.WriteLine("Press 'F1' if you would like to display 8 games");
-            Console.WriteLine("Press 'F2' if you would like to display 1 game");
+            Console.WriteLine("Item count in the list : {0}{1}Press 'F1' if you would like to display 8 games{1}Press 'F2' if you would like to display 1 game", games.Count, Environment.NewLine);
         }
         public static void Option3()
         {
-            Console.WriteLine("Press 'F1' if you would like to display games 0 1 2 3 4 5 6 7");
-            Console.WriteLine("Press 'F2' if you would like enter which games you would like to display");
+            Console.WriteLine("Press 'F1' if you would like to display games 0 1 2 3 4 5 6 7 {0}Press 'F2' if you would like enter which games you would like to display ", Environment.NewLine);
         }
         public static void EnterGameNr(int i)
         {
@@ -86,6 +81,10 @@ namespace GameOfLife
         public static void GameCountAndCellCount(List<IGameOfLife> games)
         {
             Console.WriteLine("Live game count : {1} {2}Alive cell count : {0} ", GameOfLife.GetTotalCellCountAndActiveGameCount(games).Key, GameOfLife.GetTotalCellCountAndActiveGameCount(games).Value, Environment.NewLine);
+        }
+        public static void IterateOtherGames()
+        {
+            Console.WriteLine("Press F1 to enter other 8 games to iterate on the screen");
         }
     }
 }

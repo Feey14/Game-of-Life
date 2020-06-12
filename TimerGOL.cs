@@ -28,28 +28,34 @@ namespace GameOfLife
         }
         public void StartTimer(List<IGameOfLife> games, List<IGameOfLife> ToIterate)// Timer for displaying 8 games
         {
-            var timer = new Timer(3000);
+            var timer = new Timer(2000);
             List<IGameOfLife> toshow = new List<IGameOfLife>();
             UserInput userinput = new UserInput();
-            timer.Elapsed += (sender, e) => TimerTick(games, ToIterate, toshow, userinput);
+            int state = 0;
+            timer.Elapsed += (sender, e) => TimerTick(games, ToIterate, toshow, state);
             timer.Start();
             Console.Clear();
             GameOfLife.PrintMatrix(ToIterate);
             Messages.GameCountAndCellCount(games);
-            if (toshow.Count != 8) userinput.CaptureGameOfLifes1(games, toshow);
-            if (toshow.Count == 8)
+            Messages.IterateOtherGames();
+            if (Console.ReadKey().Key == ConsoleKey.F1) state = 2;
+            else state = 1;
+            if (state == 2)
             {
-                timer.Stop();
-                timer.Dispose();
-                StartTimer(games,toshow);
+            userinput.CaptureGameOfLifes(games, toshow);
+            timer.Stop();
+            timer.Dispose();
+            StartTimer(games, toshow);
+                
             }
+            else
             Messages.PressKeyToStopMessage();
             Console.ReadLine();
             timer.Stop();
             timer.Dispose();
             Messages.TerminatingApplicationMessage();
         }
-        void TimerTick(List<IGameOfLife> games, List<IGameOfLife> ToIterate, List<IGameOfLife> toshow, UserInput userinput)
+        void TimerTick(List<IGameOfLife> games, List<IGameOfLife> ToIterate, List<IGameOfLife> toshow, int state)
         {
             Console.Clear();
             foreach (var game in games)
@@ -61,8 +67,13 @@ namespace GameOfLife
             }
             GameOfLife.PrintMatrix(ToIterate);
             Messages.GameCountAndCellCount(games);
-            Messages.EnterGameNr(toshow.Count+1);
-            Messages.PressKeyToStopMessage();
+            if (state == 2)
+                Messages.EnterGameNr(toshow.Count + 1);
+            else if (state == 1)
+                Messages.PressKeyToStopMessage();
+            else if (state == 0)
+                Messages.IterateOtherGames();
+
         }
     }
 }

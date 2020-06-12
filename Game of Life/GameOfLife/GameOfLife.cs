@@ -140,7 +140,7 @@ namespace GameOfLife
         {
             List<string> lines = new List<string>();
             int linecount = 0;
-            int consoleWidth = 110;
+            int consoleWidth = 210;
             int maxheight = 0;
             foreach (var game in ToIterate)
             {
