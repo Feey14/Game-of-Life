@@ -7,7 +7,7 @@ namespace GameOfLife
     {
         public static void WidthInputMessage()
         {
-            Console.WriteLine("Enter Matrix Width");
+            Console.WriteLine("Enter Matrix Width Max value is 210");
         }
         public static void HeightInputMessage()
         {
@@ -85,6 +85,18 @@ namespace GameOfLife
         public static void IterateOtherGames()
         {
             Console.WriteLine("Press F1 to enter other 8 games to iterate on the screen");
+        }
+        public static void EnterValidNumbers()
+        {
+            Console.WriteLine("Not valid, please enter numbers only");
+        }
+        public static void FileDoesNotExist()
+        {
+            Console.WriteLine("File does not exist");
+        }
+        public static void NotEnoughGames()
+        {
+            Console.WriteLine("Not enough games in memory");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace GameOfLife
 {
@@ -16,66 +17,91 @@ namespace GameOfLife
                 Messages.Option1();
                 switch (Console.ReadKey().Key)
                 {
-                    case ConsoleKey.F1:
+                case ConsoleKey.F1:
+                    if (File.Exists("../../../TestFile.bin"))
+                    {
                         games = file.ReadFromaFile();
                         Messages.Option2(games);
+                    }
+                    else
+                    {
+                        Messages.FileDoesNotExist();
+                        break;
+                    }
                         switch (Console.ReadKey().Key)
                         {
-                            case ConsoleKey.F1:
-                                Messages.Option3();
-                                List<IGameOfLife> ToIterate = new List<IGameOfLife>();
-                                switch (Console.ReadKey().Key)
-                                {
-                                    case ConsoleKey.F1:
-                                        for (int i = 0; i < 8; i++)
+                        case ConsoleKey.F1:
+                            Messages.Option3();
+                            List<IGameOfLife> ToIterate = new List<IGameOfLife>();
+                            switch (Console.ReadKey().Key)
+                            {
+                                case ConsoleKey.F1:
+                                        if (games.Count > 8)
                                         {
-                                            ToIterate.Add(games[i]);
+                                            for (int i = 0; i < 8; i++)
+                                            {
+                                                ToIterate.Add(games[i]);
+                                            }
                                         }
-                                        timer.StartTimer(games, ToIterate);
-                                        break;
-                                    case ConsoleKey.F2:
-                                        for (int i = 0; i < 8; i++)
+                                        else
                                         {
-                                            Messages.EnterGameNr(i);
-                                            Int32.TryParse(Console.ReadLine(), out int gameNr);
-                                            ToIterate.Add(games[gameNr]);
+                                            Messages.NotEnoughGames();
+                                            break;
                                         }
-                                        timer.StartTimer(games, ToIterate);
-                                        break;
-                                }
-                                break;
-                            case ConsoleKey.F2:
-                                timer.StartTimer(games[0]);
-                                break;
-                        }
-                        break;
-                    case ConsoleKey.F2:
-                        games = new List<IGameOfLife>();
-                        for (int i = 0; i < 1000; i++)
+                                    timer.StartTimer(games, ToIterate);
+                                    break;
+                                case ConsoleKey.F2:
+                                    UserInput userinput = new UserInput();
+                                    List<IGameOfLife> toshow = new List<IGameOfLife>();
+                                    userinput.CaptureGameOfLifes(games, toshow);
+                                    timer.StartTimer(games, toshow);
+                                    break;
+                            }
+                            break;
+                        case ConsoleKey.F2:
+                        if (games.Count > 1)
                         {
-                            var randompattern = new RandomPattern();
-                            IGameOfLife tempgame = new GameOfLife(30, 15);
-                            randompattern.Add(tempgame);
-                            games.Add(tempgame);
+                            timer.StartTimer(games[0]);
                         }
-                        Messages.ThousandGameCreation();
+                        else
+                        {
+                            Messages.NotEnoughGames();
+                            break;
+                        }
                         break;
-                    case ConsoleKey.F3:
-                        var UserInput = new UserInput();
-                        IGameOfLife game = UserInput.Capture();//initialazing game of life
-                        var lws = new LightWeightSpaceship();
-                        lws.Add(game);//Adding lightweightspaceship
-                        timer.StartTimer(game);
-                        games.Add(game);
-                        file.WriteToaFile(games);
-                        break;
-                }
-                Messages.SaveGames(games);
-                if (Console.ReadKey().Key == ConsoleKey.Y && games.Count>0)
-                {
+                        }
+                    break;
+                case ConsoleKey.F2:
+                    games = new List<IGameOfLife>();
+                    for (int i = 0; i < 1000; i++)
+                    {
+                        var randompattern = new RandomPattern();
+                        IGameOfLife tempgame = new GameOfLife(30, 15);
+                        randompattern.Add(tempgame);
+                        games.Add(tempgame);
+                    }
+                    Messages.ThousandGameCreation();
+                    break;
+                case ConsoleKey.F3:
+                    var UserInput = new UserInput();
+                    IGameOfLife game = UserInput.Capture();//initialazing game of life
+                    var lws = new LightWeightSpaceship();
+                    lws.Add(game);//Adding lightweightspaceship
+                    timer.StartTimer(game);
+                    games.Add(game);
                     file.WriteToaFile(games);
-                    Console.Clear();
-                    Messages.InformationIsSaved();
+                    break;
+                }
+                if (games.Count > 0)
+                {
+                    Messages.SaveGames(games);
+                    if (Console.ReadKey().Key == ConsoleKey.Y)
+                    {
+                        Messages.SaveGames(games);
+                        file.WriteToaFile(games);
+                        Console.Clear();
+                        Messages.InformationIsSaved();
+                    }
                 }
                 Messages.EndOfProgram();
                 if (!(Console.ReadKey().Key == ConsoleKey.Y)) repeat = false;

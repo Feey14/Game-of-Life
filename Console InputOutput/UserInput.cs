@@ -8,13 +8,22 @@ namespace GameOfLife
     {
         public IGameOfLife Capture()
         {
+        Messages.WidthInputMessage();
+        string input = Console.ReadLine();
+        bool parse1 = Int32.TryParse(input, out int Width);
+        Messages.HeightInputMessage();
+        input = Console.ReadLine();
+        bool parse2 = Int32.TryParse(input, out int Height);
+        while (Height<0 || Width<0 || Width>210 || !parse1 || !parse2)
+        {
+            Messages.EnterValidNumbers();
             Messages.WidthInputMessage();
-            string input = Console.ReadLine();
-            Int32.TryParse(input, out int Width);
-
+            input = Console.ReadLine();
+            parse1 = Int32.TryParse(input, out Width);
             Messages.HeightInputMessage();
             input = Console.ReadLine();
-            Int32.TryParse(input, out int Height);
+            parse2 = Int32.TryParse(input, out Height);
+        }
             IGameOfLife game = new GameOfLife(Width,Height);
             return game;
         }
@@ -23,7 +32,15 @@ namespace GameOfLife
             while (toshow.Count < 8)
             {
                 Messages.EnterGameNr(toshow.Count + 1);
-                Int32.TryParse(Console.ReadLine(), out int gameNr);
+                string input = Console.ReadLine();
+                bool parsing = Int32.TryParse(input, out int gameNr);
+                while (gameNr >= games.Count || gameNr<0 || !parsing)
+                {
+                    Messages.EnterValidNumbers();
+                    Messages.EnterGameNr(toshow.Count + 1);
+                    input = Console.ReadLine();
+                    parsing = Int32.TryParse(input, out gameNr);
+                }
                 toshow.Add(games[gameNr]);
             }
         }
