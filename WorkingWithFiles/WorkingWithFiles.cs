@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace GameOfLife
 {
-    class WorkingWithFiles
+    internal class WorkingWithFiles
     {
         public List<IGameOfLife> ReadFromaFile()
         {
@@ -27,6 +27,7 @@ namespace GameOfLife
             }
             return new List<IGameOfLife>();
         }
+
         public void WriteToaFile(List<IGameOfLife> games)
         {
             try

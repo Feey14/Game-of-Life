@@ -11,12 +11,19 @@ namespace GameOfLife
         int Width { get; set; }
 
         void AddCell(int x, int y);
+
         void AddCells(List<Coordinates> ToAdd);
+
         int GetNeighbourCount(int x, int y);
+
         void Iterate();
+
         void PrintInformation();
+
         void PrintMatrix();
+
         void RemoveCell(int x, int y);
+
         void RemoveCells(List<Coordinates> ToRemove);
     }
 }

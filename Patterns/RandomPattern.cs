@@ -1,16 +1,16 @@
 ﻿using System;
 
 namespace GameOfLife
-{ 
-    class RandomPattern : Patterns
+{
+    internal class RandomPattern : Patterns
     {
         public override void Add(IGameOfLife game)
         {
             Random random = new Random();
-            for (int y=0; y<game.Height; y++)
+            for (int y = 0; y < game.Height; y++)
                 for (int x = 0; x < game.Width; x++)
                 {
-                    if (random.Next(2) == 0) game.AddCell(x, y); 
+                    if (random.Next(2) == 0) game.AddCell(x, y);
                 }
         }
     }

@@ -1,6 +1,6 @@
 ﻿namespace GameOfLife
 {
-    class LightWeightSpaceship : Patterns
+    internal class LightWeightSpaceship : Patterns
     {
         public override void Add(IGameOfLife game)
         {

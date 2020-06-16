@@ -1,6 +1,6 @@
 ﻿namespace GameOfLife
 {
-    class Glider : Patterns
+    internal class Glider : Patterns
     {
         public override void Add(IGameOfLife game)
         {

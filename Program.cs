@@ -4,108 +4,114 @@ using System.IO;
 
 namespace GameOfLife
 {
-    class Program
+    internal class Program
     {
-        static void Main()
+        private static void Main()
         {
             bool repeat = true;
             do
             {
-                var file = new WorkingWithFiles();
                 List<IGameOfLife> games = new List<IGameOfLife>();
-                var timer = new TimerGOL();
-                Messages.Option1();
+                Messages.ReadFomFileOrCreatethousandgamesOrCreateSingleGOL();
                 switch (Console.ReadKey().Key)
                 {
-                case ConsoleKey.F1:
-                    if (File.Exists("../../../TestFile.bin"))
-                    {
-                        games = file.ReadFromaFile();
-                        Messages.Option2(games);
-                    }
-                    else
-                    {
-                        Messages.FileDoesNotExist();
-                        break;
-                    }
-                        switch (Console.ReadKey().Key)
+                    case ConsoleKey.F1:
+                        if (File.Exists("../../../TestFile.bin"))
                         {
-                        case ConsoleKey.F1:
-                            Messages.Option3();
-                            List<IGameOfLife> ToIterate = new List<IGameOfLife>();
-                            switch (Console.ReadKey().Key)
-                            {
-                                case ConsoleKey.F1:
-                                        if (games.Count > 8)
-                                        {
-                                            for (int i = 0; i < 8; i++)
-                                            {
-                                                ToIterate.Add(games[i]);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            Messages.NotEnoughGames();
-                                            break;
-                                        }
-                                    timer.StartTimer(games, ToIterate);
-                                    break;
-                                case ConsoleKey.F2:
-                                    UserInput userinput = new UserInput();
-                                    List<IGameOfLife> toshow = new List<IGameOfLife>();
-                                    userinput.CaptureGameOfLifes(games, toshow);
-                                    timer.StartTimer(games, toshow);
-                                    break;
-                            }
-                            break;
-                        case ConsoleKey.F2:
-                        if (games.Count > 1)
-                        {
-                            timer.StartTimer(games[0]);
+                            var file = new WorkingWithFiles();
+                            games = file.ReadFromaFile();
                         }
                         else
                         {
-                            Messages.NotEnoughGames();
+                            Messages.FileDoesNotExist();
                             break;
                         }
-                        break;
+                        Messages.DisplayEightOrDisplayOne(games);
+                        switch (Console.ReadKey().Key)
+                        {
+                            case ConsoleKey.F1:
+                                DisplayEightGameOfLifeSetup(games);
+                                break;
+
+                            case ConsoleKey.F2:
+                                DisplayGameOfLifeSetup(games);
+                                break;
                         }
-                    break;
-                case ConsoleKey.F2:
-                    games = new List<IGameOfLife>();
-                    for (int i = 0; i < 1000; i++)
-                    {
-                        var randompattern = new RandomPattern();
-                        IGameOfLife tempgame = new GameOfLife(30, 15);
-                        randompattern.Add(tempgame);
-                        games.Add(tempgame);
-                    }
-                    Messages.ThousandGameCreation();
-                    break;
-                case ConsoleKey.F3:
-                    var UserInput = new UserInput();
-                    IGameOfLife game = UserInput.Capture();//initialazing game of life
-                    var lws = new LightWeightSpaceship();
-                    lws.Add(game);//Adding lightweightspaceship
-                    timer.StartTimer(game);
-                    games.Add(game);
-                    file.WriteToaFile(games);
-                    break;
+                        break;
+
+                    case ConsoleKey.F2:
+                        games = CreateThousandGames();
+                        break;
+
+                    case ConsoleKey.F3:
+                        CreateGameOfLifeSetup(games);
+                        break;
                 }
-                if (games.Count > 0)
-                {
-                    Messages.SaveGames(games);
-                    if (Console.ReadKey().Key == ConsoleKey.Y)
-                    {
-                        Messages.SaveGames(games);
-                        file.WriteToaFile(games);
-                        Console.Clear();
-                        Messages.InformationIsSaved();
-                    }
-                }
+                SaveGames(games);
                 Messages.EndOfProgram();
                 if (!(Console.ReadKey().Key == ConsoleKey.Y)) repeat = false;
             } while (repeat == true);
+        }
+
+        private static List<IGameOfLife> CreateThousandGames()
+        {
+            List<IGameOfLife> games = new List<IGameOfLife>();
+            for (int i = 0; i < 1000; i++)
+            {
+                var randompattern = new RandomPattern();
+                IGameOfLife tempgame = new GameOfLife(30, 15);
+                randompattern.Add(tempgame);
+                games.Add(tempgame);
+            }
+            Messages.ThousandGameCreation();
+            return games;
+        }
+
+        private static void SaveGames(List<IGameOfLife> games)
+        {
+            if (games.Count > 0)
+            {
+                Messages.SaveGames(games);
+                if (Console.ReadKey().Key == ConsoleKey.Y)
+                {
+                    var file = new WorkingWithFiles();
+
+                    file.WriteToaFile(games);
+                    Console.Clear();
+                    Messages.InformationIsSaved();
+                }
+            }
+        }
+
+        private static void DisplayEightGameOfLifeSetup(List<IGameOfLife> games)
+        {
+            List<IGameOfLife> toshow = new List<IGameOfLife>();
+            UserInput userinput = new UserInput();
+            var timer = new TimerGOL();
+
+            userinput.CaptureGameOfLifes(games, toshow);
+            timer.StartTimer(games, toshow);
+        }
+
+        private static void DisplayGameOfLifeSetup(List<IGameOfLife> games)
+        {
+            UserInput userinput = new UserInput();
+            var timer = new TimerGOL();
+
+            IGameOfLife game = userinput.CaptureGameNr(games);
+            timer.StartTimer(game);
+        }
+
+        private static void CreateGameOfLifeSetup(List<IGameOfLife> games)
+        {
+            var UserInput = new UserInput();
+            var timer = new TimerGOL();
+            var lws = new LightWeightSpaceship();
+
+            IGameOfLife game = UserInput.Capture();//initialazing game of life
+            lws.Add(game);//Adding lightweightspaceship
+            timer.StartTimer(game);
+            games.Add(game);
         }
     }
 }

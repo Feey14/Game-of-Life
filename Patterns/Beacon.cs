@@ -1,6 +1,6 @@
 ﻿namespace GameOfLife
 {
-    class Beacon : Patterns
+    internal class Beacon : Patterns
     {
         public override void Add(IGameOfLife game)
         {

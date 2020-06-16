@@ -1,6 +1,6 @@
 ﻿namespace GameOfLife
 {
-    class SimkinGliderGun : Patterns
+    internal class SimkinGliderGun : Patterns
     {
         public override void Add(IGameOfLife game)
         {
