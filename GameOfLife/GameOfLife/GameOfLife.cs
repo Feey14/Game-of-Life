@@ -84,7 +84,7 @@ namespace GameOfLife
 
         public void AddCells(List<Coordinates> ToAdd)
         {
-            foreach (var add in ToAdd)// Adding new Cells
+            foreach (Coordinates add in ToAdd)// Adding new Cells
             {
                 if (Matrix[add.WidthCoord, add.HeightCoord] == false)
                 {
@@ -95,7 +95,7 @@ namespace GameOfLife
 
         public void RemoveCells(List<Coordinates> ToRemove)
         {
-            foreach (var add in ToRemove)// Deleting Cells
+            foreach (Coordinates add in ToRemove)// Deleting Cells
             {
                 if (Matrix[add.WidthCoord, add.HeightCoord] == true)
                 {

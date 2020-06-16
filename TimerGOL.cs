@@ -8,11 +8,10 @@ namespace GameOfLife
     {
         public void StartTimer(IGameOfLife game)
         {
-            var timer = new Timer(1000);
-            //List < IGameOfLife > games = new List<IGameOfLife>();
-            //games.Add(game);
-            //timer.Elapsed += (sender, e) => TimerTick(games, games, games, 1);
-            timer.Elapsed += (sender, e) => TimerTick(game);
+            Timer timer = new Timer(1000);
+            List<IGameOfLife> games = new List<IGameOfLife>() { game };
+
+            timer.Elapsed += (sender, e) => TimerTick(games, games, games, 1);
             timer.Start();
             Console.Clear();
             game.PrintMatrix();
@@ -23,20 +22,13 @@ namespace GameOfLife
             Messages.TerminatingApplicationMessage();
         }
 
-        private void TimerTick(IGameOfLife game)
-        {
-            Console.Clear();
-            game.Iterate();
-            game.PrintMatrix();
-            Messages.PressKeyToStopMessage();
-        }
-
         public void StartTimer(List<IGameOfLife> games, List<IGameOfLife> ToIterate)// Timer for displaying 8 games
         {
-            var timer = new Timer(2000);
+            Timer timer = new Timer(1000);
             List<IGameOfLife> toshow = new List<IGameOfLife>();
             UserInput userinput = new UserInput();
             int state = 0;
+
             timer.Elapsed += (sender, e) => TimerTick(games, ToIterate, toshow, state);
             timer.Start();
             Console.Clear();
@@ -45,7 +37,7 @@ namespace GameOfLife
             Messages.IterateOtherGames();
             if (Console.ReadKey().Key == ConsoleKey.F1) state = 2;
             else state = 1;
-            if (state == 2)
+            if (state == 2)//Entering games thatwill be shown
             {
                 userinput.CaptureGameOfLifes(games, toshow);
                 timer.Stop();
@@ -57,26 +49,34 @@ namespace GameOfLife
             Console.ReadLine();
             timer.Stop();
             timer.Dispose();
-            //Messages.TerminatingApplicationMessage();
         }
 
         private void TimerTick(List<IGameOfLife> games, List<IGameOfLife> ToIterate, List<IGameOfLife> toshow, int state)
         {
             Console.Clear();
-            foreach (var game in games)
+            if (ToIterate.Count == 1)
             {
-                if (game.AliveCells != 0)
-                {
-                    game.Iterate();
-                }
+                Console.Clear();
+                ToIterate[0].Iterate();
+                ToIterate[0].PrintMatrix();
             }
-            PrintMultipleGames.PrintMatrix(ToIterate);
-            Messages.GameCountAndCellCount(PrintMultipleGames.GameOfLifeStatistics(games));
-            if (state == 2)
+            else
+            {
+                foreach (IGameOfLife game in games)
+                {
+                    if (game.AliveCells != 0)
+                    {
+                        game.Iterate();
+                    }
+                }
+                PrintMultipleGames.PrintMatrix(ToIterate);
+                Messages.GameCountAndCellCount(PrintMultipleGames.GameOfLifeStatistics(games));
+            }
+            if (state == 2)//Entering games
                 Messages.EnterGameNr(toshow.Count + 1);
-            else if (state == 1)
+            else if (state == 1)//Stopping
                 Messages.PressKeyToStopMessage();
-            else if (state == 0)
+            else if (state == 0)//Checking if user wants to enter other games
                 Messages.IterateOtherGames();
         }
     }

@@ -14,12 +14,10 @@ namespace GameOfLife
             {
                 Console.Clear();
                 IFormatter formatter = new BinaryFormatter();
-                using (Stream stream = new FileStream("../../../TestFile.bin", FileMode.Open, FileAccess.Read))
-                {
-                    List<IGameOfLife> games = (List<IGameOfLife>)formatter.Deserialize(stream);
-                    stream.Close();
-                    return games;
-                }
+                using Stream stream = new FileStream("../../../TestFile.bin", FileMode.Open, FileAccess.Read);
+                List<IGameOfLife> games = (List<IGameOfLife>)formatter.Deserialize(stream);
+                stream.Close();
+                return games;
             }
             catch (Exception ex)
             {
@@ -32,12 +30,10 @@ namespace GameOfLife
         {
             try
             {
-                using (Stream stream = new FileStream("../../../TestFile.bin", FileMode.Create, FileAccess.Write))
-                {
-                    IFormatter formatter = new BinaryFormatter();
-                    formatter.Serialize(stream, games);
-                    stream.Close();
-                }
+                using Stream stream = new FileStream("../../../TestFile.bin", FileMode.Create, FileAccess.Write);
+                IFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, games);
+                stream.Close();
             }
             catch (Exception ex)
             {

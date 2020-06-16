@@ -18,7 +18,7 @@ namespace GameOfLife
                     case ConsoleKey.F1:
                         if (File.Exists("../../../TestFile.bin"))
                         {
-                            var file = new WorkingWithFiles();
+                            WorkingWithFiles file = new WorkingWithFiles();
                             games = file.ReadFromaFile();
                         }
                         else
@@ -58,7 +58,7 @@ namespace GameOfLife
             List<IGameOfLife> games = new List<IGameOfLife>();
             for (int i = 0; i < 1000; i++)
             {
-                var randompattern = new RandomPattern();
+                RandomPattern randompattern = new RandomPattern();
                 IGameOfLife tempgame = new GameOfLife(30, 15);
                 randompattern.Add(tempgame);
                 games.Add(tempgame);
@@ -74,7 +74,7 @@ namespace GameOfLife
                 Messages.SaveGames(games);
                 if (Console.ReadKey().Key == ConsoleKey.Y)
                 {
-                    var file = new WorkingWithFiles();
+                    WorkingWithFiles file = new WorkingWithFiles();
 
                     file.WriteToaFile(games);
                     Console.Clear();
@@ -87,7 +87,7 @@ namespace GameOfLife
         {
             List<IGameOfLife> toshow = new List<IGameOfLife>();
             UserInput userinput = new UserInput();
-            var timer = new TimerGOL();
+            TimerGOL timer = new TimerGOL();
 
             userinput.CaptureGameOfLifes(games, toshow);
             timer.StartTimer(games, toshow);
@@ -96,7 +96,7 @@ namespace GameOfLife
         private static void DisplayGameOfLifeSetup(List<IGameOfLife> games)
         {
             UserInput userinput = new UserInput();
-            var timer = new TimerGOL();
+            TimerGOL timer = new TimerGOL();
 
             IGameOfLife game = userinput.CaptureGameNr(games);
             timer.StartTimer(game);
@@ -104,11 +104,11 @@ namespace GameOfLife
 
         private static void CreateGameOfLifeSetup(List<IGameOfLife> games)
         {
-            var UserInput = new UserInput();
-            var timer = new TimerGOL();
-            var lws = new LightWeightSpaceship();
+            UserInput userinput = new UserInput();
+            TimerGOL timer = new TimerGOL();
+            LightWeightSpaceship lws = new LightWeightSpaceship();
 
-            IGameOfLife game = UserInput.Capture();//initialazing game of life
+            IGameOfLife game = userinput.Capture();//initialazing game of life
             lws.Add(game);//Adding lightweightspaceship
             timer.StartTimer(game);
             games.Add(game);
