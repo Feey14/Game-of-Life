@@ -34,15 +34,15 @@ namespace GameOfLife
                 Messages.PrintLine(line + "|");// Printing line and right border symbol
             }
             line.Clear();
-            for (int x = 0; x <= Width; x++)// Printing bottom border
+            for (int x = 0; x <= Width; x++)// Getting bottom border string
             {
                 line.Append("-");
             }
-            Messages.PrintLine(line.ToString()); // Wierd moment
+            Messages.PrintLine(line.ToString());//Printing bottom border
             PrintInformation();
         }
 
-        public int GetNeighbourCount(int x, int y)
+        public int GetNeighbourCount(int x, int y)//Calculates and returns neighbour count
         {
             int NeighbourCount = 0;
             for (int l = -1; l <= 1; l++)
@@ -56,7 +56,7 @@ namespace GameOfLife
             return NeighbourCount;
         }
 
-        public void Iterate()
+        public void Iterate()//Iterates Game of Life
         {
             List<Coordinates> ToAdd = new List<Coordinates>();
             List<Coordinates> ToRemove = new List<Coordinates>();
@@ -104,7 +104,7 @@ namespace GameOfLife
             }
         }
 
-        public void AddCell(int x, int y) // Adding cell to the matrix
+        public void AddCell(int x, int y) // Adding cell to the matrix and increases Alivecell by one
         {
             if (x > Width - 1 || y > Height - 1)
                 throw new IndexOutOfRangeException("Index was outside the bounds of the array");
@@ -115,7 +115,7 @@ namespace GameOfLife
             }
         }
 
-        public void RemoveCell(int x, int y) // Adding cell to the matrix
+        public void RemoveCell(int x, int y) // Removing cell from the matrix and reduces Alivecell by one
         {
             if (x > Width - 1 || y > Height - 1)
                 throw new IndexOutOfRangeException("Index was outside the bounds of the array");
@@ -126,7 +126,7 @@ namespace GameOfLife
             }
         }
 
-        public void PrintInformation()
+        public void PrintInformation()// Prints Game of Life statistics
         {
             Messages.PrintCellCount(AliveCells);
             Messages.PrintIterationCount(IterationCount);

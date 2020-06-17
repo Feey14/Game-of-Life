@@ -5,7 +5,7 @@ namespace GameOfLife
 {
     internal class UserInput
     {
-        public IGameOfLife Capture()
+        public IGameOfLife Capture()//Captures Game of Life with max width of 210(fullscreen console)
         {
             int width, height;
             bool widthparse, heightparse;
@@ -23,7 +23,7 @@ namespace GameOfLife
             return game;
         }
 
-        public void CaptureGameOfLifes(List<IGameOfLife> games, List<IGameOfLife> toshow)
+        public void CaptureGameOfLifes(List<IGameOfLife> games, List<IGameOfLife> toshow)//Captures eight games and adds it to toshow List
         {
             while (toshow.Count < 8)
             {
@@ -39,7 +39,7 @@ namespace GameOfLife
             }
         }
 
-        public IGameOfLife CaptureGameNr(List<IGameOfLife> games)
+        public IGameOfLife CaptureGameNr(List<IGameOfLife> games)//Captures which game should be displayed and returns this game
         {
             bool parsing;
             int gameNr;

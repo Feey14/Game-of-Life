@@ -6,7 +6,7 @@ namespace GameOfLife
 {
     internal class TimerGOL
     {
-        public void StartTimer(IGameOfLife game)
+        public void StartTimer(IGameOfLife game)//Timer for displaying one game
         {
             Timer timer = new Timer(1000);
             List<IGameOfLife> games = new List<IGameOfLife>() { game };
@@ -37,7 +37,7 @@ namespace GameOfLife
             Messages.IterateOtherGames();
             if (Console.ReadKey().Key == ConsoleKey.F1) state = 2;
             else state = 1;
-            if (state == 2)//Entering games thatwill be shown
+            if (state == 2)//Entering games during iteration that will be shown
             {
                 userinput.CaptureGameOfLifes(games, toshow);
                 timer.Stop();
@@ -51,7 +51,7 @@ namespace GameOfLife
             timer.Dispose();
         }
 
-        private void TimerTick(List<IGameOfLife> games, List<IGameOfLife> ToIterate, List<IGameOfLife> toshow, int state)
+        private void TimerTick(List<IGameOfLife> games, List<IGameOfLife> ToIterate, List<IGameOfLife> toshow, int state)//Single timer tick function iterates games and prints them
         {
             Console.Clear();
             if (ToIterate.Count == 1)

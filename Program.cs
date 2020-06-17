@@ -16,7 +16,7 @@ namespace GameOfLife
                 switch (Console.ReadKey().Key)
                 {
                     case ConsoleKey.F1:
-                        if (File.Exists("../../../TestFile.bin"))
+                        if (File.Exists("../../../Storage.bin"))
                         {
                             WorkingWithFiles file = new WorkingWithFiles();
                             games = file.ReadFromaFile();
@@ -53,7 +53,7 @@ namespace GameOfLife
             } while (repeat == true);
         }
 
-        private static List<IGameOfLife> CreateThousandGames()
+        private static List<IGameOfLife> CreateThousandGames()//Creating Thousand games and returns List of them
         {
             List<IGameOfLife> games = new List<IGameOfLife>();
             for (int i = 0; i < 1000; i++)
@@ -83,7 +83,7 @@ namespace GameOfLife
             }
         }
 
-        private static void DisplayEightGameOfLifeSetup(List<IGameOfLife> games)
+        private static void DisplayEightGameOfLifeSetup(List<IGameOfLife> games)// Setup for Displaying eight Games of Life
         {
             List<IGameOfLife> toshow = new List<IGameOfLife>();
             UserInput userinput = new UserInput();
@@ -93,7 +93,7 @@ namespace GameOfLife
             timer.StartTimer(games, toshow);
         }
 
-        private static void DisplayGameOfLifeSetup(List<IGameOfLife> games)
+        private static void DisplayGameOfLifeSetup(List<IGameOfLife> games)// Setup or dispaying one Game of Life
         {
             UserInput userinput = new UserInput();
             TimerGOL timer = new TimerGOL();
@@ -102,7 +102,7 @@ namespace GameOfLife
             timer.StartTimer(game);
         }
 
-        private static void CreateGameOfLifeSetup(List<IGameOfLife> games)
+        private static void CreateGameOfLifeSetup(List<IGameOfLife> games) //Setup for creating Game of Life
         {
             UserInput userinput = new UserInput();
             TimerGOL timer = new TimerGOL();

@@ -6,7 +6,7 @@ namespace GameOfLife
 {
     public class PrintMultipleGames
     {
-        public static void PrintMatrix(List<IGameOfLife> ToIterate)
+        public static void PrintMatrix(List<IGameOfLife> ToIterate)//Splits strings so that they will fit evenly in console and prints games
         {
             List<string> lines = new List<string>();
             int consoleWidth = Console.WindowWidth;
@@ -73,7 +73,7 @@ namespace GameOfLife
             }
         }
 
-        public static StringBuilder GetlineForPrinting(IGameOfLife game, StringBuilder line, int height)
+        public static StringBuilder GetlineForPrinting(IGameOfLife game, StringBuilder line, int height)//Creates concatenated string of all games
         {
             if (height > game.Height)
             {
@@ -102,7 +102,7 @@ namespace GameOfLife
             return line;
         }
 
-        public static Tuple<int, int> GameOfLifeStatistics(List<IGameOfLife> games)
+        public static Tuple<int, int> GameOfLifeStatistics(List<IGameOfLife> games)// Statistics of every game of life
         {
             int activegamecount = games.Count;
             int totalcellcount = 0;
